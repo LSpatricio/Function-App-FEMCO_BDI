@@ -1,0 +1,133 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\table\\custom\\icmtoolsreports\\funtion_icmtoolsreports.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\table\\custom\\icmtoolsreports\\funtion_icmtoolsreports.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\table\\custom\\datacategorysales\\function_datacategorysales.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\table\\custom\\datacategorysales\\function_datacategorysales.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\table\\custom\\catpersonaldivision\\function_catpersonaldivision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\table\\custom\\catpersonaldivision\\function_catpersonaldivision.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\dao\\dao_sql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\dao\\dao_sql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\dao\\icmservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\dao\\icmservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|c:\\users\\lpatricio\\documents\\function_femco_bdi\\function_femco_bdi\\dao\\blobservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29444CA4-4AA8-46BF-AB22-A63EA0BBD025}|FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI.csproj|solutionrelative:function_femco_bdi\\dao\\blobservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 100,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Funtion_ICMTOOLSREPORTS.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\ICMTOOLSREPORTS\\Funtion_ICMTOOLSREPORTS.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\Table\\Custom\\ICMTOOLSREPORTS\\Funtion_ICMTOOLSREPORTS.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\ICMTOOLSREPORTS\\Funtion_ICMTOOLSREPORTS.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\Table\\Custom\\ICMTOOLSREPORTS\\Funtion_ICMTOOLSREPORTS.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T20:11:11.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Function_DATACATEGORYSALES.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\DATACATEGORYSALES\\Function_DATACATEGORYSALES.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\Table\\Custom\\DATACATEGORYSALES\\Function_DATACATEGORYSALES.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\DATACATEGORYSALES\\Function_DATACATEGORYSALES.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\Table\\Custom\\DATACATEGORYSALES\\Function_DATACATEGORYSALES.cs",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAgwJYAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T19:02:20.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Function_CATPERSONALDIVISION.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\CATPERSONALDIVISION\\Function_CATPERSONALDIVISION.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\Table\\Custom\\CATPERSONALDIVISION\\Function_CATPERSONALDIVISION.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Table\\Custom\\CATPERSONALDIVISION\\Function_CATPERSONALDIVISION.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\Table\\Custom\\CATPERSONALDIVISION\\Function_CATPERSONALDIVISION.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAgwIoAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T18:59:55.684Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DAO_SQL.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\DAO_SQL.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\DAO\\DAO_SQL.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\DAO_SQL.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\DAO\\DAO_SQL.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAgwBMAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T21:14:34.439Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ICMService.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\ICMService.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\DAO\\ICMService.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\ICMService.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\DAO\\ICMService.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwCIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-24T15:41:31.79Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Program.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\Program.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\Program.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-21T19:46:15.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BlobService.cs",
+              "DocumentMoniker": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\BlobService.cs",
+              "RelativeDocumentMoniker": "FUNCTION_FEMCO_BDI\\DAO\\BlobService.cs",
+              "ToolTip": "C:\\Users\\lpatricio\\Documents\\FUNCTION_FEMCO_BDI\\FUNCTION_FEMCO_BDI\\DAO\\BlobService.cs",
+              "RelativeToolTip": "FUNCTION_FEMCO_BDI\\DAO\\BlobService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T16:56:17.497Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
