@@ -14,36 +14,27 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
     {
 
 
-        public static void EncryptCsvToStream(string csvContent, Stream outputStream, PgpPublicKey publicKey, string nombre)
+        public static async Task EncryptCsvToStream(Stream csvContent, Stream outputStream, PgpPublicKey publicKey, string nombre)
         {
-            using (MemoryStream bOut = new MemoryStream())
+            byte[] buffer = new byte[1 << 16]; // 128 KB
+
+            PgpEncryptedDataGenerator encGen = new PgpEncryptedDataGenerator(SymmetricKeyAlgorithmTag.Aes256, true, new SecureRandom());
+            encGen.AddMethod(publicKey);
+            using (Stream encOut = encGen.Open(outputStream, buffer))
             {
                 PgpCompressedDataGenerator comData = new PgpCompressedDataGenerator(CompressionAlgorithmTag.Zip);
-                using (Stream cos = comData.Open(bOut))
+                using (Stream cos = comData.Open(encOut))
                 {
                     PgpLiteralDataGenerator lData = new PgpLiteralDataGenerator();
-                    using (Stream pOut = lData.Open(cos, PgpLiteralData.Binary, nombre, DateTime.UtcNow, new byte[4096]))
+                    using (Stream pOut = lData.Open(cos, PgpLiteralData.Binary, nombre, DateTime.UtcNow,buffer))
                     {
-                        //    byte[] csvBytes = Encoding.UTF8.GetBytes(csvContent);
-                        //  pOut.Write(csvBytes, 0, csvBytes.Length);
-                        using (var writer = new StreamWriter(pOut, Encoding.UTF8, bufferSize: 8192, leaveOpen: true))
-                        {
-                            writer.Write(csvContent);
-                            writer.Flush(); // Asegura que los datos lleguen al stream
-                        }
+                      await csvContent.CopyToAsync(pOut);
+                      await pOut.FlushAsync();
 
                     }
                 }
-                comData.Close();
-
-                PgpEncryptedDataGenerator encGen = new PgpEncryptedDataGenerator(SymmetricKeyAlgorithmTag.Aes256, true, new SecureRandom());
-                encGen.AddMethod(publicKey);
-                using (Stream encOut = encGen.Open(outputStream, bOut.Length))
-                {
-                    bOut.Position = 0;
-                    bOut.CopyTo(encOut);
-                }
             }
+           
         }
 
 

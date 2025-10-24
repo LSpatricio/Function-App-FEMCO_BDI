@@ -122,7 +122,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTOXXOTDAVENTAYMERMAPORESTRUCTURA
         //    return response;
 
         //}
-        #endregion
+        //#endregion
 
 
         //#region BulkCreate como Azure Function Timer.
