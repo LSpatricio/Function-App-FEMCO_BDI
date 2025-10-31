@@ -20,16 +20,19 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
 
             PgpEncryptedDataGenerator encGen = new PgpEncryptedDataGenerator(SymmetricKeyAlgorithmTag.Aes256, true, new SecureRandom());
             encGen.AddMethod(publicKey);
-            using (Stream encOut = encGen.Open(outputStream, buffer))
+            using (Stream encOut = encGen.Open(outputStream, new byte[1 << 16]))
             {
                 PgpCompressedDataGenerator comData = new PgpCompressedDataGenerator(CompressionAlgorithmTag.Zip);
                 using (Stream cos = comData.Open(encOut))
                 {
                     PgpLiteralDataGenerator lData = new PgpLiteralDataGenerator();
-                    using (Stream pOut = lData.Open(cos, PgpLiteralData.Binary, nombre, DateTime.UtcNow,buffer))
+                    using (Stream pOut = lData.Open(cos, PgpLiteralData.Binary, nombre, DateTime.UtcNow, new byte[1 << 16]))
                     {
-                      await csvContent.CopyToAsync(pOut);
-                      await pOut.FlushAsync();
+                        Console.WriteLine($"Posición actual del stream: {csvContent.Position}");
+                        Console.WriteLine($"Longitud del stream: {csvContent.Length}");
+
+                        await csvContent.CopyToAsync(pOut);
+                        await pOut.FlushAsync(); 
 
                     }
                 }
