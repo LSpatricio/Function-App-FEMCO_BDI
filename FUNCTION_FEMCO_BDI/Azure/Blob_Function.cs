@@ -51,11 +51,13 @@ namespace FUNCTION_FEMCO_BDI.Azure
                     _logger.LogInformation($"El archivo {name} ya está encriptado.");
                     return;
                 }
-
-                //Se lee el contenido
-                var blobStreamReader = new StreamReader(stream);
-                //Se lee el contenido
-                string csvContent = await blobStreamReader.ReadToEndAsync();
+               
+                ////
+                ////Se lee el contenido
+                //var blobStreamReader = new StreamReader(stream);
+               
+                ////Se lee el contenido
+                //string csvContent = await blobStreamReader.ReadToEndAsync();
 
                 //Se crea un stream que sea el contenido encryptado
                 using (MemoryStream encryptedStream = new MemoryStream())
@@ -72,7 +74,7 @@ namespace FUNCTION_FEMCO_BDI.Azure
                     PgpPublicKey publicKey = Funcionalidad_Encriptacion.ReadPublicKey(lectorStream);
 
                     //EncryptCsvToStream(csvContent, encryptedStream, publicKey, name);
-                    Funcionalidad_Encriptacion.EncryptCsvToStream(csvContent, encryptedStream, publicKey, name);
+                    await Funcionalidad_Encriptacion.EncryptCsvToStream(stream, encryptedStream, publicKey, name);
                     //Subir archivo a otro contenedor
                     BlobClient blobEncriptado = await _blobservice.UploadBlobAsync(encryptedStream, blobServiceClient, $"{name}.pgp", "sqlmi-sftp-csv-base-encripted");
 

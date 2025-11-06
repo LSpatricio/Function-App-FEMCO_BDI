@@ -32,7 +32,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
         #region BulkCreate como método.
         public async Task<string> BulkCreate_DTCIERREVIRTUAL()
         {
-            DataTable dtfechas = FuncionalidadICM.getdates(1);
+            DataTable dtfechas = FuncionalidadICM.getdates();
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
 
