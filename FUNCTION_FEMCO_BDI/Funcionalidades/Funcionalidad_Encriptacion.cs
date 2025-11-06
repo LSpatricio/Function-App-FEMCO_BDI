@@ -16,7 +16,6 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
 
         public static async Task EncryptCsvToStream(Stream csvContent, Stream outputStream, PgpPublicKey publicKey, string nombre)
         {
-            byte[] buffer = new byte[1 << 16]; // 128 KB
 
             PgpEncryptedDataGenerator encGen = new PgpEncryptedDataGenerator(SymmetricKeyAlgorithmTag.Aes256, true, new SecureRandom());
             encGen.AddMethod(publicKey);
