@@ -44,7 +44,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
             // Formato MM/dd/yyyystring
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result387";
             string ConsultaICM = @"SELECT _ResultID
                                           ,IDSociety

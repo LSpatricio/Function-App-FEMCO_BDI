@@ -32,7 +32,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SCHEDULEITEM
         #region BulkCreate como método.
         public async Task<string> BulkCreate_SCHEDULEITEM()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "ScheduleItem";
 
             string ConsultaICM = @"SELECT ScheduleItemID,

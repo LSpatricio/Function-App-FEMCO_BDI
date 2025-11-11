@@ -30,7 +30,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSFECHAHOY
         #region BulkCreate como método.
         public async Task<string> BulkCreate_SYSFECHAHOY()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "sysFechaHoy";
 
             string ConsultaICM = @"SELECT ID,

@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGSTOREHIERARCHY
         #region BulkCreate como método.
         public async Task<string> BulkCreate_CFGSTOREHIERARCHY()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CfgStoreHierarchy";
             string ConsultaICM = @"SELECT IDStore
                                           ,IDZone

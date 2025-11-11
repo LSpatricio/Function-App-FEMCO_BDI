@@ -42,7 +42,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGROLES
             // Formato MM/dd/yyyystring
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CfgRoles";
             string ConsultaICM = @"SELECT IDSociety
                                           ,IDRole

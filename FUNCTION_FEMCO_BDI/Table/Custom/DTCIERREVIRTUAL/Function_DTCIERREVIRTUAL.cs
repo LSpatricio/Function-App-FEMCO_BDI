@@ -43,7 +43,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
             dateStartFormatted = dateStartFormatted.Replace(" ", "%");
 
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "dtCierreVirtual";
 
             string ConsultaICM = @"SELECT CentroTrabajoID,

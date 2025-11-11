@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPOSITION
         #region BulkCreate como método.
         public async Task<string> BulkCreate_CATPOSITION()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CatPosition";
             string ConsultaICM = @"SELECT IDPosition
                                           ,Description

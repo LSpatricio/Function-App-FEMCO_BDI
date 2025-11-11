@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.AUDIT_
         public async Task<string> BulkCreate_AUDIT_()
         {
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "Audit_";
             string ConsultaICM = @"SELECT AuditID_,
                                             UserType_,

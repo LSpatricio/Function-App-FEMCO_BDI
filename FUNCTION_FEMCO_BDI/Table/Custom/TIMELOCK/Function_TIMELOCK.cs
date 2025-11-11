@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMELOCK
         public async Task<string> BulkCreate_TIMELOCK()
         {
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "TimeLock";
 
             string ConsultaICM = @"SELECT TimeID,

@@ -42,7 +42,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);             
 
             
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "HistoryPayee";
 
             string ConsultaICM = @"SELECT PayeeID,

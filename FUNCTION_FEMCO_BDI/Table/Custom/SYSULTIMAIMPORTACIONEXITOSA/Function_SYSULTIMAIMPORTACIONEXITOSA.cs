@@ -30,7 +30,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSULTIMAIMPORTACIONEXITOSA
         #region BulkCreate como método.
         public async Task<string> BulkCreate_SYSULTIMAIMPORTACIONEXITOSA()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "sysUltimaImportacionExitosa";
 
             string ConsultaICM = @"SELECT NombreImportacion,

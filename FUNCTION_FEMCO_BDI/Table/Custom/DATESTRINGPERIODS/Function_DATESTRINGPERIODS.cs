@@ -44,7 +44,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
 
            
             //**********Obtencion de los datos en un datatable.************************************
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "DateStringPeriods";
 
             string ConsultaICM = @"SELECT PeriodString,

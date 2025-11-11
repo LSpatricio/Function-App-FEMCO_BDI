@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPERSONALDIVISION
         #region BulkCreate como método.
         public async Task<string> BulkCreate_CATPERSONALDIVISION()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CatPersonalDivision";
 
             string ConsultaICM = @"SELECT IDPersonalDivision,

@@ -34,7 +34,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TB_PARAMETROS
         #region BulkCreate como método.
         public async Task<string> BulkCreate_TB_PARAMETROS()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "FemcoTransferTbParametros";
 
             string ConsultaICM = @"SELECT IdParametro,

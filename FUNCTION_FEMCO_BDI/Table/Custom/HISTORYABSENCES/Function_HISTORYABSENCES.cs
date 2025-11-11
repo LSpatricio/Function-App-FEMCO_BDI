@@ -42,7 +42,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYABSENCES
             // Formato MM/dd/yyyystring
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "HistoryAbsences";
             string ConsultaICM = @"SELECT PayeeID,
                                             DateStart,

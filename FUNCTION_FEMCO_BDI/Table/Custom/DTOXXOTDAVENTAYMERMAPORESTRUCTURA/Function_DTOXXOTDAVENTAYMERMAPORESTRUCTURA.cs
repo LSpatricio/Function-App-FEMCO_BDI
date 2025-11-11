@@ -44,7 +44,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTOXXOTDAVENTAYMERMAPORESTRUCTURA
         //    string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
         //    //**********Obtencion de los datos en un datatable.************************************
-        //    string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+        //    string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
         //    string tablaICM = "dtOxxoTdaVentaYMermaPorEstructura";
            
         //    string consultaICM = $@"SELECT TiendaID,

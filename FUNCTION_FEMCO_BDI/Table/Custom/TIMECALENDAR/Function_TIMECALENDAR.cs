@@ -35,7 +35,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMECALENDAR
         public async Task<string> BulkCreate_TIMECALENDAR()
         {
 
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "TimeCalendar";
             string ConsultaICM = @"SELECT TimeID,
                                             LastLockedPeriod

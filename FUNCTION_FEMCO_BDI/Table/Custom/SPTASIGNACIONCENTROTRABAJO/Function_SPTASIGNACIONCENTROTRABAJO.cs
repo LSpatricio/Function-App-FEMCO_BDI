@@ -30,7 +30,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SPTASIGNACIONCENTROTRABAJO
         #region BulkCreate como método.
         public async Task<string> BulkCreate_SPTASIGNACIONCENTROTRABAJO()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "sptAsignacionCentroTrabajo";
 
             string ConsultaICM = @"SELECT CentroTrabajoID,

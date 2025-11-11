@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.ADMIN
         #region BulkCreate como método.
         public async Task<string> BulkCreate_ADMIN()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "Admin";
             string ConsultaICM = @"SELECT AdminID,
                                                 Name,

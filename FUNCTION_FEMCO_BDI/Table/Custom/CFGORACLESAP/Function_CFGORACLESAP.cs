@@ -33,7 +33,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGORACLESAP
         #region BulkCreate como método.
         public async Task<string> BulkCreate_CFGORACLESAP()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CfgOracleSAP";
             string ConsultaICM = @"SELECT IDFinancialState
                                           ,IDCostCenter

@@ -30,7 +30,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATABSENCE
         #region BulkCreate como método.
         public async Task<string> BulkCreate_CATABSENCE()
         {
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CatAbsence";
 
             string ConsultaICM = @"SELECT IDAbsence,

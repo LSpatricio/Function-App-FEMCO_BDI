@@ -46,7 +46,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGDATESTRINGPERIOD
 
            
             //**********Obtencion de los datos en un datatable.************************************
-            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEPDev");
+            string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CfgDateStringPeriod";
 
             string ConsultaICM = @"SELECT IDPeriod,
