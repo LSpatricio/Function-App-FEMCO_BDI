@@ -44,7 +44,6 @@ namespace FUNCTION_FEMCO_BDI
                     });
                     services.AddScoped<ICMService>();
                     services.AddScoped<DAO_SQL>();
-                    services.AddScoped<BigQueryService>();
                     services.AddScoped<FuncionalidadSQL>();
                     services.AddScoped<FuncionalidadICM>();
                     services.AddScoped<BlobService>();

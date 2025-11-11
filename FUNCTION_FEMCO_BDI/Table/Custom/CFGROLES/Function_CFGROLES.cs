@@ -67,14 +67,14 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGROLES
         [Function("BulkCreate_Trigger_CFGROLES")]
         public async Task<HttpResponseData> BulkCreate_Trigger_CFGROLES([HttpTrigger(AuthorizationLevel.Function, "post", Route = "BulkCreate_Trigger_CFGROLES")] HttpRequestData req)
         {
-            _logger.LogInformation("Inicio de la función BulkCreate_Trigger_CFGROLES.");
             var response = req.CreateResponse();
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
 
             try
             {
+                _logger.LogInformation("Inicio de la función BulkCreate_Trigger_CFGROLES.");
+                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
                 string mensaje = await BulkCreate_CFGROLES();
 
                 var result = new

@@ -71,7 +71,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
                                                 IsOutputInterface
                                                  FROM " + TablaICM;
 
-            string parametros = $@" WHERE \""StarDate\"" >= '{dateStartFormatted}' ";
+            string parametros = "  ";
             DataTable dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, parametros);
 
             string mensaje = await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
