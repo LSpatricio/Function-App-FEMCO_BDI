@@ -52,29 +52,20 @@ namespace FUNCTION_FEMCO_BDI.Azure
                     return;
                 }
                
-                ////
-                ////Se lee el contenido
-                //var blobStreamReader = new StreamReader(stream);
-               
-                ////Se lee el contenido
-                //string csvContent = await blobStreamReader.ReadToEndAsync();
-
                 //Se crea un stream que sea el contenido encryptado
                 using (MemoryStream encryptedStream = new MemoryStream())
                 {
-
 
                     // Crear el cliente de Blob Service
 
                     string pgpKey = Encoding.UTF8.GetString(Convert.FromBase64String(KeyPublic));
 
                     // Convertir a MemoryStream (si necesitas trabajar con stream)
-                    MemoryStream lectorStream = new MemoryStream(Encoding.UTF8.GetBytes(pgpKey));
-
-                    PgpPublicKey publicKey = Funcionalidad_Encriptacion.ReadPublicKey(lectorStream);
-
-                    //EncryptCsvToStream(csvContent, encryptedStream, publicKey, name);
-                    await Funcionalidad_Encriptacion.EncryptCsvToStream(stream, encryptedStream, publicKey, name);
+                    using (MemoryStream lectorStream = new MemoryStream(Encoding.UTF8.GetBytes(pgpKey)))
+                    {
+                        PgpPublicKey publicKey = Funcionalidad_Encriptacion.ReadPublicKey(lectorStream);
+                        await Funcionalidad_Encriptacion.EncryptCsvToStream(stream, encryptedStream, publicKey, name);
+                    }
                     //Subir archivo a otro contenedor
                     BlobClient blobEncriptado = await _blobservice.UploadBlobAsync(encryptedStream, blobServiceClient, $"{name}.pgp", "sqlmi-sftp-csv-base-encripted");
 
@@ -101,23 +92,13 @@ namespace FUNCTION_FEMCO_BDI.Azure
                     metaDataBlobCSVBase.Add("Encriptado", "Si");
 
                 }
-
-
                 await blobCSVBase.SetMetadataAsync(metaDataBlobCSVBase);
-
-
-
-
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error: {Message}", ex.Message);
-                // throw new Exception(ex.Message, ex);
-
             }
-
-
         }
 
         /// <summary>
@@ -189,20 +170,12 @@ namespace FUNCTION_FEMCO_BDI.Azure
                     metaDataBlobCSVBase.Add("Desencriptado", "Si");
 
                 }
-
-
                 await blobEncriptado.SetMetadataAsync(metaDataBlobCSVBase);
-
-
-
-
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error: {Message}", ex.Message);
-                // throw new Exception(ex.Message, ex);
-
             }
 
 
