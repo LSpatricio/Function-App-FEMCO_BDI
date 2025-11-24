@@ -85,11 +85,11 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
         [Function("BulkCreate_Trigger__RESULT287")]
         public async Task<HttpResponseData> BulkCreate_Trigger__RESULT287([HttpTrigger(AuthorizationLevel.Function, "post", Route = "BulkCreate_Trigger__RESULT287")] HttpRequestData req)
         {
-            _logger.LogInformation("Inicio de la función BulkCreate_Trigger__RESULT287.");
             var response = req.CreateResponse();
 
             try
             {
+                _logger.LogInformation("Inicio de la función BulkCreate_Trigger__RESULT287.");
                 response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 string mensaje = await BulkCreate__RESULT287();

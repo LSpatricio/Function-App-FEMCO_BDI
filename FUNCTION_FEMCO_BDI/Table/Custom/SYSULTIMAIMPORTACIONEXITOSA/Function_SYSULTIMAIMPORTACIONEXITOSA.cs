@@ -52,11 +52,11 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSULTIMAIMPORTACIONEXITOSA
         [Function("BulkCreate_Trigger_SYSULTIMAIMPORTACIONEXITOSA")]
         public async Task<HttpResponseData> BulkCreate_Trigger_SYSULTIMAIMPORTACIONEXITOSA([HttpTrigger(AuthorizationLevel.Function, "post", Route = "BulkCreate_Trigger_SYSULTIMAIMPORTACIONEXITOSA")] HttpRequestData req)
         {
-            _logger.LogInformation("Inicio de la función BulkCreate_Trigger_SYSULTIMAIMPORTACIONEXITOSA.");
             var response = req.CreateResponse();
 
             try
             {
+                _logger.LogInformation("Inicio de la función BulkCreate_Trigger_SYSULTIMAIMPORTACIONEXITOSA.");
                 response.Headers.Add("Content-Type", "application/json; charset=utf-8");
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 string mensaje = await BulkCreate_SYSULTIMAIMPORTACIONEXITOSA();
