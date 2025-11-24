@@ -56,12 +56,11 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATABSENCE
         {
             _logger.LogInformation("Inicio de la función BulkCreate_Trigger_CATABSENCE.");
             var response = req.CreateResponse();
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
 
             try
             {
+                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 string mensaje = await BulkCreate_CATABSENCE();
 
                 var result = new
