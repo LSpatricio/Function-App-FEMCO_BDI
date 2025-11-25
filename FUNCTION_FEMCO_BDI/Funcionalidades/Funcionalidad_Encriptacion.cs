@@ -115,11 +115,20 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
             // 🔹 Si es un archivo literal, escribirlo en el output
             if (message is PgpLiteralData literalData)
             {
-                using (StreamReader reader = new StreamReader(literalData.GetInputStream(), Encoding.UTF8))
-                using (StreamWriter writer = new StreamWriter(outputStream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true))
+                try
                 {
-                    string contenido = reader.ReadToEnd();
-                    writer.Write(contenido);
+                    using (StreamReader reader = new StreamReader(literalData.GetInputStream(), Encoding.UTF8))
+                    using (StreamWriter writer = new StreamWriter(outputStream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true))
+                    {
+                        using (Stream literalStream = literalData.GetInputStream())
+                        {
+                            literalStream.CopyTo(outputStream);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new ArgumentException("Ha ocurrido un problem durante la desencriptación.");
                 }
             }
             else
