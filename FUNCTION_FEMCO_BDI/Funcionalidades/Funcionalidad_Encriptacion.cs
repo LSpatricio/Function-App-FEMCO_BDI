@@ -56,78 +56,83 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
 
         public static void DecryptFileWithPgp(Stream inputStream, Stream outputStream, Stream privateKeyStream)
         {
-            Stream decoderStream = PgpUtilities.GetDecoderStream(inputStream);
-            PgpObjectFactory pgpF = new PgpObjectFactory(decoderStream);
-            //  PgpObjectFactory pgpF = new PgpObjectFactory(PgpUtilities.GetDecoderStream(inputStream));
-
-            PgpEncryptedDataList enc = null;
-            PgpObject o;
-
-            // 🔹 Buscar el bloque de datos encriptados
-            while ((o = pgpF.NextPgpObject()) != null)
+            try
             {
-                if (o is PgpEncryptedDataList dataList)
+                Stream decoderStream = PgpUtilities.GetDecoderStream(inputStream);
+                PgpObjectFactory pgpF = new PgpObjectFactory(decoderStream);
+                //  PgpObjectFactory pgpF = new PgpObjectFactory(PgpUtilities.GetDecoderStream(inputStream));
+
+                PgpEncryptedDataList enc = null;
+                PgpObject o;
+
+                // 🔹 Buscar el bloque de datos encriptados
+                while ((o = pgpF.NextPgpObject()) != null)
                 {
-                    enc = dataList;
-                    break;
+                    if (o is PgpEncryptedDataList dataList)
+                    {
+                        enc = dataList;
+                        break;
+                    }
+                }
+
+                if (enc == null) throw new ArgumentException("No se encontró una lista de datos encriptados en el archivo.");
+
+
+                // 🔹 Buscar los datos encriptados correctos
+                PgpPublicKeyEncryptedData pbe = null;
+                foreach (PgpEncryptedData ed in enc.GetEncryptedDataObjects())
+                {
+                    if (ed is PgpPublicKeyEncryptedData data)
+                    {
+                        pbe = data;
+                        break;
+                    }
+                }
+
+                if (pbe == null) throw new ArgumentException("No se encontraron datos encriptados con clave pública.");
+
+
+                //// 🔹 Obtener la clave privada válida
+                //PgpPrivateKey privateKey = GetPrivateKey(privateKeyStream);
+                //if (privateKey == null) throw new ArgumentException("Clave privada inválida.");
+
+
+                PgpPrivateKey privateKey = GetMatchingPrivateKey(privateKeyStream, pbe.KeyId);
+
+
+                // Desencriptar los datos
+                Stream clear = pbe.GetDataStream(privateKey);
+
+                PgpObjectFactory plainFact = new PgpObjectFactory(clear);
+                PgpObject message = plainFact.NextPgpObject();
+
+                // 🔹 Manejo de archivos comprimidos PGP
+                if (message is PgpCompressedData compressedData)
+                {
+                    Stream compDataStream = compressedData.GetDataStream();
+                    PgpObjectFactory pgpFact = new PgpObjectFactory(compDataStream);
+                    message = pgpFact.NextPgpObject();
+                }
+
+                // 🔹 Si es un archivo literal, escribirlo en el output
+                if (message is PgpLiteralData literalData)
+                {
+                    using (StreamReader reader = new StreamReader(literalData.GetInputStream(), Encoding.UTF8))
+                    using (StreamWriter writer = new StreamWriter(outputStream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true))
+                    {
+                        string contenido = reader.ReadToEnd();
+                        writer.Write(contenido);
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Formato de archivo no reconocido después de la desencriptación.");
                 }
             }
-
-            if (enc == null) throw new ArgumentException("No se encontró una lista de datos encriptados en el archivo.");
-
-
-            // 🔹 Buscar los datos encriptados correctos
-            PgpPublicKeyEncryptedData pbe = null;
-            foreach (PgpEncryptedData ed in enc.GetEncryptedDataObjects())
+            catch (Exception ex)
             {
-                if (ed is PgpPublicKeyEncryptedData data)
-                {
-                    pbe = data;
-                    break;
-                }
+                throw new ArgumentException("Ha ocurrido un problem durante la desencriptación. ", ex);
             }
-
-            if (pbe == null) throw new ArgumentException("No se encontraron datos encriptados con clave pública.");
-
-
-            //// 🔹 Obtener la clave privada válida
-            //PgpPrivateKey privateKey = GetPrivateKey(privateKeyStream);
-            //if (privateKey == null) throw new ArgumentException("Clave privada inválida.");
-
-
-            PgpPrivateKey privateKey = GetMatchingPrivateKey(privateKeyStream, pbe.KeyId);
-
-
-            // Desencriptar los datos
-            Stream clear = pbe.GetDataStream(privateKey);
-
-            PgpObjectFactory plainFact = new PgpObjectFactory(clear);
-            PgpObject message = plainFact.NextPgpObject();
-
-            // 🔹 Manejo de archivos comprimidos PGP
-            if (message is PgpCompressedData compressedData)
-            {
-                Stream compDataStream = compressedData.GetDataStream();
-                PgpObjectFactory pgpFact = new PgpObjectFactory(compDataStream);
-                message = pgpFact.NextPgpObject();
-            }
-
-            // 🔹 Si es un archivo literal, escribirlo en el output
-            if (message is PgpLiteralData literalData)
-            {
-                using (StreamReader reader = new StreamReader(literalData.GetInputStream(), Encoding.UTF8))
-                using (StreamWriter writer = new StreamWriter(outputStream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true))
-                {
-                    string contenido = reader.ReadToEnd();
-                    writer.Write(contenido);
-                }
-            }
-            else
-            {
-                throw new ArgumentException("Formato de archivo no reconocido después de la desencriptación.");
-            }
-
-
         }
 
 

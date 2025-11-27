@@ -71,14 +71,13 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYREVISION
         [Function("BulkCreate_Trigger_HISTORYREVISION")]
         public async Task<HttpResponseData> BulkCreate_Trigger_HISTORYREVISION([HttpTrigger(AuthorizationLevel.Function, "post", Route = "BulkCreate_Trigger_HISTORYREVISION")] HttpRequestData req)
         {
-            _logger.LogInformation("Inicio de la función BulkCreate_Trigger_HISTORYREVISION.");
             var response = req.CreateResponse();
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
 
             try
             {
+                _logger.LogInformation("Inicio de la función BulkCreate_Trigger_HISTORYREVISION.");
+                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 string mensaje = await BulkCreate_HISTORYREVISION();
 
                 var result = new
