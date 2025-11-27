@@ -56,87 +56,83 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
 
         public static void DecryptFileWithPgp(Stream inputStream, Stream outputStream, Stream privateKeyStream)
         {
-            Stream decoderStream = PgpUtilities.GetDecoderStream(inputStream);
-            PgpObjectFactory pgpF = new PgpObjectFactory(decoderStream);
-            //  PgpObjectFactory pgpF = new PgpObjectFactory(PgpUtilities.GetDecoderStream(inputStream));
-
-            PgpEncryptedDataList enc = null;
-            PgpObject o;
-
-            // 🔹 Buscar el bloque de datos encriptados
-            while ((o = pgpF.NextPgpObject()) != null)
+            try
             {
-                if (o is PgpEncryptedDataList dataList)
+                Stream decoderStream = PgpUtilities.GetDecoderStream(inputStream);
+                PgpObjectFactory pgpF = new PgpObjectFactory(decoderStream);
+                //  PgpObjectFactory pgpF = new PgpObjectFactory(PgpUtilities.GetDecoderStream(inputStream));
+
+                PgpEncryptedDataList enc = null;
+                PgpObject o;
+
+                // 🔹 Buscar el bloque de datos encriptados
+                while ((o = pgpF.NextPgpObject()) != null)
                 {
-                    enc = dataList;
-                    break;
+                    if (o is PgpEncryptedDataList dataList)
+                    {
+                        enc = dataList;
+                        break;
+                    }
                 }
-            }
 
-            if (enc == null) throw new ArgumentException("No se encontró una lista de datos encriptados en el archivo.");
+                if (enc == null) throw new ArgumentException("No se encontró una lista de datos encriptados en el archivo.");
 
 
-            // 🔹 Buscar los datos encriptados correctos
-            PgpPublicKeyEncryptedData pbe = null;
-            foreach (PgpEncryptedData ed in enc.GetEncryptedDataObjects())
-            {
-                if (ed is PgpPublicKeyEncryptedData data)
+                // 🔹 Buscar los datos encriptados correctos
+                PgpPublicKeyEncryptedData pbe = null;
+                foreach (PgpEncryptedData ed in enc.GetEncryptedDataObjects())
                 {
-                    pbe = data;
-                    break;
+                    if (ed is PgpPublicKeyEncryptedData data)
+                    {
+                        pbe = data;
+                        break;
+                    }
                 }
-            }
 
-            if (pbe == null) throw new ArgumentException("No se encontraron datos encriptados con clave pública.");
-
-
-            //// 🔹 Obtener la clave privada válida
-            //PgpPrivateKey privateKey = GetPrivateKey(privateKeyStream);
-            //if (privateKey == null) throw new ArgumentException("Clave privada inválida.");
+                if (pbe == null) throw new ArgumentException("No se encontraron datos encriptados con clave pública.");
 
 
-            PgpPrivateKey privateKey = GetMatchingPrivateKey(privateKeyStream, pbe.KeyId);
+                //// 🔹 Obtener la clave privada válida
+                //PgpPrivateKey privateKey = GetPrivateKey(privateKeyStream);
+                //if (privateKey == null) throw new ArgumentException("Clave privada inválida.");
 
 
-            // Desencriptar los datos
-            Stream clear = pbe.GetDataStream(privateKey);
+                PgpPrivateKey privateKey = GetMatchingPrivateKey(privateKeyStream, pbe.KeyId);
 
-            PgpObjectFactory plainFact = new PgpObjectFactory(clear);
-            PgpObject message = plainFact.NextPgpObject();
 
-            // 🔹 Manejo de archivos comprimidos PGP
-            if (message is PgpCompressedData compressedData)
-            {
-                Stream compDataStream = compressedData.GetDataStream();
-                PgpObjectFactory pgpFact = new PgpObjectFactory(compDataStream);
-                message = pgpFact.NextPgpObject();
-            }
+                // Desencriptar los datos
+                Stream clear = pbe.GetDataStream(privateKey);
 
-            // 🔹 Si es un archivo literal, escribirlo en el output
-            if (message is PgpLiteralData literalData)
-            {
-                try
+                PgpObjectFactory plainFact = new PgpObjectFactory(clear);
+                PgpObject message = plainFact.NextPgpObject();
+
+                // 🔹 Manejo de archivos comprimidos PGP
+                if (message is PgpCompressedData compressedData)
+                {
+                    Stream compDataStream = compressedData.GetDataStream();
+                    PgpObjectFactory pgpFact = new PgpObjectFactory(compDataStream);
+                    message = pgpFact.NextPgpObject();
+                }
+
+                // 🔹 Si es un archivo literal, escribirlo en el output
+                if (message is PgpLiteralData literalData)
                 {
                     using (StreamReader reader = new StreamReader(literalData.GetInputStream(), Encoding.UTF8))
                     using (StreamWriter writer = new StreamWriter(outputStream, Encoding.UTF8, bufferSize: 1024, leaveOpen: true))
                     {
-                        using (Stream literalStream = literalData.GetInputStream())
-                        {
-                            literalStream.CopyTo(outputStream);
-                        }
+                        string contenido = reader.ReadToEnd();
+                        writer.Write(contenido);
                     }
                 }
-                catch (Exception)
+                else
                 {
-                    throw new ArgumentException("Ha ocurrido un problem durante la desencriptación.");
+                    throw new ArgumentException("Formato de archivo no reconocido después de la desencriptación.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                throw new ArgumentException("Formato de archivo no reconocido después de la desencriptación.");
+                throw new ArgumentException("Ha ocurrido un problem durante la desencriptación. ", ex);
             }
-
-
         }
 
 
