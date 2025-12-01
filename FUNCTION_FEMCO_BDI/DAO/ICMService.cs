@@ -110,7 +110,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             {
                 // Manejo de cualquier otro tipo de excepción
                 Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
-                throw new InvalidOperationException($"Error en ConsultarICM: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error en ConsultarICM", ex);
 
             }
         }
@@ -180,7 +180,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             {
                 // Manejo de cualquier otro tipo de excepción
                 Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
-                throw new InvalidOperationException($"Error en ConsultarICM: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error en ConsultarICM", ex);
 
             }
         }
