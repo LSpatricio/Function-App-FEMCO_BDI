@@ -58,7 +58,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             catch (Exception ex)
             {
 
-                throw new InvalidOperationException($"Error al insertar los datos: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error al insertar los datos", ex);
 
             }
         }
@@ -103,7 +103,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             catch (Exception ex)
             {
 
-                throw new InvalidOperationException($"Error al insertar los datos: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error al insertar los datos", ex);
 
             }
         }
@@ -148,7 +148,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             catch (Exception ex)
             {
 
-                throw new InvalidOperationException($"Error al insertar los datos: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error al insertar los datos", ex);
 
             }
         }
@@ -209,7 +209,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error", ex);
             }
             return lista;
         }
@@ -254,7 +254,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error", ex);
             }
            
 
@@ -293,7 +293,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error", ex);
             }
 
             return r;
@@ -324,7 +324,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Error: {ex.Message}", ex);
+                throw new InvalidOperationException($"Error", ex);
             }
 
             return r;
@@ -367,7 +367,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
             catch(Exception ex)
             {
-                throw new InvalidOperationException($"Error: {ex.Message}" , ex);
+                throw new InvalidOperationException($"Error" , ex);
             }
             return r;
 

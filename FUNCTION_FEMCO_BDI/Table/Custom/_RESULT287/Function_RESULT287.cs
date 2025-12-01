@@ -117,7 +117,12 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
             {
                 _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                await response.WriteStringAsync(ex.Message);
+                
+                await response.WriteAsJsonAsync(new
+                {
+                    errorCode = "INTERNAL_ERROR",
+                    message = "Ocurrió un error interno. Inténtalo más tarde.",
+                });
 
             }
             finally
@@ -185,7 +190,12 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
             {
                 _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                await response.WriteStringAsync(ex.Message);
+                
+                await response.WriteAsJsonAsync(new
+                {
+                    errorCode = "INTERNAL_ERROR",
+                    message = "Ocurrió un error interno. Inténtalo más tarde.",
+                });
             }
             finally
             {
