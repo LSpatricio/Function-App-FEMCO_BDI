@@ -55,7 +55,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SPTASIGNACIONCENTROTRABAJO
 
             string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
 
-            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0);
 
             int count = int.Parse(dtCount.Rows[0][0].ToString());
 
@@ -68,7 +68,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SPTASIGNACIONCENTROTRABAJO
 
             for (int i = 0; i < count; i += 500000)
             {
-                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, $"{consultaICM} {orderBy}", modeloICM, i);
                 mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
             }
 
