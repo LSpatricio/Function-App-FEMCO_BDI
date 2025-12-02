@@ -71,12 +71,62 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
                                                 IsOutputInterface
                                                  FROM " + TablaICM;
 
+            List<string> columnas = new List<string>
+            {
+                "PeriodString",
+                "PeriodName",
+                "StarDate",
+                "EndDate",
+                "QuaterString",
+                "NumOfWeeks",
+                "NumOfDays",
+                "MonthInYear",
+                "MonthInYearString",
+                "MonthInYearString0",
+                "MonthInQtr",
+                "MonthInQtrString",
+                "MonthName",
+                "MonthNameAbbr",
+                "PeriodIncrement",
+                "PriorPeriod",
+                "NextPeriod",
+                "PriorYearPeriod",
+                "NextYearPeriod",
+                "ReportDisplayLabel",
+                "IsReportDisplay",
+                "IsOutputInterface"
+            };
             string parametros = "  ";
-            DataTable dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, parametros);
+            string mensaje = "";
 
-            string mensaje = await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
+            string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
+            string orderBy = $@" ORDER BY  {columnasFormateadas}";
+
+
+            string countConsulta = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros);
+
+            string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
+
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+
+            int count = int.Parse(dtCount.Rows[0][0].ToString());
+
+            if (count == 0)
+            {
+                return "Sin datos por insertar en la tabla " + NOMBRE_TABLA;
+            }
+
+            await _dao.TruncateTable(NOMBRE_TABLA);
+
+            for (int i = 0; i < count; i += 500000)
+            {
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
+            }
+
 
             return mensaje;
+
 
 
 
@@ -172,140 +222,4 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
     }
 
 
-
-    //#region Bulk Insert a la tabla
-
-    //[Function("BulkCreate_DATESTRINGPERIODS")]
-    //    public async Task<HttpResponseData> BulkCreate_DATESTRINGPERIODS([HttpTrigger(AuthorizationLevel.Function, "post", Route = "BulkCreate_DATESTRINGPERIODS")] HttpRequestData req)
-    //    {
-    //        _logger.LogInformation("Inicio de la función BulkCreate_DATESTRINGPERIODS.");
-    //        var response = req.CreateResponse();
-    //        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-    //        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
-
-    //        try
-    //        {
-    //            DataTable dataTable = JsonConvert.DeserializeObject<DataTable>(requestBody);
-
-    //            await _dao.bulkInsert(dataTable, NOMBRE_TABLA);
-    //            response.StatusCode = HttpStatusCode.Created;
-    //            await response.WriteStringAsync("Created succesfully");
-
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-    //            response.StatusCode = HttpStatusCode.InternalServerError;
-    //            await response.WriteStringAsync(ex.Message);
-
-    //        }
-    //        finally
-    //        {
-    //            _logger.LogInformation("Fin de la función BulkCreate_DATESTRINGPERIODS");
-
-    //        }
-
-    //        return response;
-
-    //    }
-    //    #endregion
-
-    //    #region Select a tabla
-
-    //    [Function("GetAllRows_DATESTRINGPERIODS")]
-    //    public async Task<HttpResponseData> GetAllRows_DATESTRINGPERIODS([HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetAllRows_DATESTRINGPERIODS")] HttpRequestData req)
-    //    {
-    //        _logger.LogInformation("Inicio de la función GetAllRows_DATESTRINGPERIODS.");
-
-    //        var response = req.CreateResponse();
-    //        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-
-    //        try
-    //        {
-    //            List<CL_DATESTRINGPERIODS> lista = await _dao.getAllRows<CL_DATESTRINGPERIODS>(NOMBRE_TABLA);
-
-    //            if (lista.Count > 0)
-    //            {
-    //                string jsonResult = JsonConvert.SerializeObject(lista);
-    //                response.StatusCode = HttpStatusCode.OK;
-    //                await response.WriteStringAsync(jsonResult);
-    //            }
-    //            else
-    //            {
-    //                response.StatusCode = HttpStatusCode.NoContent;
-    //            }
-
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-    //            response.StatusCode = HttpStatusCode.InternalServerError;
-    //            await response.WriteStringAsync(ex.Message);
-    //        }
-    //        finally
-    //        {
-    //            _logger.LogInformation("Fin de la función GetAllRows_DATESTRINGPERIODS");
-
-    //        }
-
-
-    //        return response;
-
-
-    //    }
-    //    #endregion
-
-    //    #region Eliminar registros
-
-    //    [Function("Delete_DATESTRINGPERIODS")]
-    //    public async Task<HttpResponseData> Delete_DATESTRINGPERIODS([HttpTrigger(AuthorizationLevel.Function, "delete", Route = "Delete_DATESTRINGPERIODS")] HttpRequestData req)
-    //    {
-
-
-    //        _logger.LogInformation("Inicio de la función Delete_DATESTRINGPERIODS.");
-    //        var response = req.CreateResponse();
-    //        response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-
-    //        try
-    //        {
-    //            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-    //            CL_DATESTRINGPERIODS datosBody = JsonConvert.DeserializeObject<CL_DATESTRINGPERIODS>(requestBody);
-
-    //            int r = await _dao.deleteRangeDates(NOMBRE_TABLA, datosBody.StarDate, datosBody.EndDate, nameof(datosBody.StarDate), nameof(datosBody.EndDate));
-
-    //            if (r > 0)
-    //            {
-    //                response.StatusCode = HttpStatusCode.OK;
-    //                await response.WriteStringAsync("Records deleted successfully.");
-    //            }
-    //            else
-    //            {
-    //                response.StatusCode = HttpStatusCode.NotFound;
-    //                await response.WriteStringAsync("No records found.");
-
-    //            }
-
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-    //            response.StatusCode = HttpStatusCode.InternalServerError;
-    //            await response.WriteStringAsync(ex.Message);
-    //        }
-    //        finally
-    //        {
-    //            _logger.LogInformation("Fin de la función Delete_DATESTRINGPERIODS.");
-    //        }
-
-    //        return response;
-    //    }
-    //    #endregion
-
-
-
-
-
-    //}
 }

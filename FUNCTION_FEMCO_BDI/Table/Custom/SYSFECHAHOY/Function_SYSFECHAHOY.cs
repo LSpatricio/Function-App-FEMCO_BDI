@@ -1,13 +1,15 @@
 ﻿using FUNCTION_FEMCO_BDI.DAO;
-using System;
-using System.Data;
-using System.Threading.Tasks;
-using System.IO;
-using System.Net;
-using Microsoft.Azure.Functions.Worker.Http;
+using FUNCTION_FEMCO_BDI.Funcionalidades;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 
 
 namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSFECHAHOY
@@ -33,15 +35,40 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSFECHAHOY
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
             string TablaICM = "sysFechaHoy";
 
-            string ConsultaICM = @"SELECT ID,
-                            Fecha,
-                            FechaDate
-                            FROM " + TablaICM;
-
+            List<string> columnas = new List<string>
+            {
+                "ID",
+                "Fecha",
+                "FechaDate"
+            };
             string parametros = "";
-            DataTable dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, parametros);
+            string mensaje = "";
 
-            string mensaje = await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
+            string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
+            string orderBy = $@" ORDER BY  {columnasFormateadas}";
+
+
+            string countConsulta = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros);
+
+            string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
+
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+
+            int count = int.Parse(dtCount.Rows[0][0].ToString());
+
+            if (count == 0)
+            {
+                return "Sin datos por insertar en la tabla " + NOMBRE_TABLA;
+            }
+
+            await _dao.TruncateTable(NOMBRE_TABLA);
+
+            for (int i = 0; i < count; i += 500000)
+            {
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
+            }
+
 
             return mensaje;
         }

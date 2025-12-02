@@ -44,25 +44,42 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYREVISION
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "HistoryRevision";
 
-            string ConsultaICM = @"SELECT RevisionID,
-                                AdminID,
-                                StartedAt
-                            FROM " + TablaICM;
-
+            List<string> columnas = new List<string>
+            {
+                "RevisionID",
+                "AdminID",
+                "StartedAt"
+            };
             string parametros = $@" WHERE \""StartedAt\"" >= '{dateStartFormatted}' ";
+            string mensaje = "";
 
-            // Crear un DataTable manualmente
-            DataTable dt = new DataTable();         
-            dt.Columns.Add("RevisionID", typeof(decimal));         
-            dt.Columns.Add("AdminID", typeof(string)); 
-            dt.Columns.Add("StartedAt", typeof(DateTime));
+            string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
+            string orderBy = $@" ORDER BY  {columnasFormateadas}";
 
-            dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, dt, parametros);
 
-            string mensaje = await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
+            string countConsulta = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros);
+
+            string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
+
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+
+            int count = int.Parse(dtCount.Rows[0][0].ToString());
+
+            if (count == 0)
+            {
+                return "Sin datos por insertar en la tabla " + NOMBRE_TABLA;
+            }
+
+            await _dao.TruncateTable(NOMBRE_TABLA);
+
+            for (int i = 0; i < count; i += 500000)
+            {
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
+            }
+
 
             return mensaje;
-
         }
         #endregion
 

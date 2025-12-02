@@ -1,16 +1,17 @@
 ﻿using FUNCTION_FEMCO_BDI.DAO;
+using FUNCTION_FEMCO_BDI.Funcionalidades;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.Functions.Worker;
 
 
 namespace FUNCTION_FEMCO_BDI.Table.Custom.SCHEDULE
@@ -45,20 +46,44 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SCHEDULE
                                                 DayOfWeek
                                                  FROM " + TablaICM;
 
+            List<string> columnas = new List<string>
+            {
+                "ScheduleID",
+                "ScheduleItemID",
+                "Minute",
+                "Hour",
+                "DayOfMonth",
+                "Month",
+                "DayOfWeek"
+            };
             string parametros = "";
+            string mensaje = "";
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("ScheduleID", typeof(decimal));
-            dt.Columns.Add("ScheduleItemID", typeof(decimal));
-            dt.Columns.Add("Minute", typeof(decimal));
-            dt.Columns.Add("Hour", typeof(decimal));
-            dt.Columns.Add("DayOfMonth", typeof(decimal));
-            dt.Columns.Add("Month", typeof(decimal));
-            dt.Columns.Add("DayOfWeek", typeof(decimal));
+            string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
+            string orderBy = $@" ORDER BY  {columnasFormateadas}";
 
-            dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, dt, parametros);
 
-            string mensaje = await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
+            string countConsulta = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros);
+
+            string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
+
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+
+            int count = int.Parse(dtCount.Rows[0][0].ToString());
+
+            if (count == 0)
+            {
+                return "Sin datos por insertar en la tabla " + NOMBRE_TABLA;
+            }
+
+            await _dao.TruncateTable(NOMBRE_TABLA);
+
+            for (int i = 0; i < count; i += 500000)
+            {
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
+            }
+
 
             return mensaje;
 
