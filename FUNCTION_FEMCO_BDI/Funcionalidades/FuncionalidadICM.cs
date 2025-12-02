@@ -49,17 +49,6 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
                                 row[i] = item[i];
                             }
 
-                            //switch (Type.GetTypeCode(dataTable.Columns[i].DataType))
-                            //{
-                            //    case TypeCode.DateTime:
-                            //    case TypeCode.Decimal:
-                            //        row[i] = DBNull.Value;
-                            //        break;
-                            //    default:
-                            //        row[i] = item[i];
-                            //        break;
-                            //}
-
                         }
                             else
                             {
@@ -177,6 +166,34 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
         }
 
 
+        public static string ConsultaAjustada(string tabla, string parametros ="",string columnas="")
+        {
+            string consultaAjustada = "";
+
+            if (string.IsNullOrWhiteSpace(tabla))
+            {
+                throw new ArgumentException("La tabla no puede ser nulas o vacías.");
+            }
+
+            string columnasConsulta = string.IsNullOrEmpty(columnas) ? "COUNT(*)" : columnas;
+            
+            consultaAjustada = $"SELECT {columnasConsulta} FROM \\\"{tabla}\\\" {parametros}";
+
+            return consultaAjustada;
+        }
+
+        public static string FormatearColumnas(List<string> columnas)
+        {
+            if(string.IsNullOrEmpty(columnas.ToString()))
+            {
+                throw new ArgumentException("La lista de columnas no puede ser nula o vacía.", nameof(columnas));
+            }
+
+            string columnasFormateadas = String.Join(", ", columnas.Select(c => $"\\\"{c}\\\""));
+
+            return columnasFormateadas;
+        }
+       
         public static DataTable getdates()
         {
 
@@ -211,6 +228,50 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
             return table;
 
 
+        }
+        public static DataTable CrearColumnasQuerytool(JArray jsonEncabezados)
+        {
+            DataTable dt = new DataTable();
+
+            foreach (JObject columnDefinition in jsonEncabezados)
+            {
+                DataColumn column = new DataColumn(columnDefinition["name"].ToString());
+                //Regresa typeOf
+                column.DataType = FuncionalidadICM.TipoDe(columnDefinition["type"].ToString());
+                dt.Columns.Add(column);
+
+            }
+            return dt;
+        }
+
+        public static void LlenarDataTableQuerytool(JArray jsonData, DataTable dt)
+        {
+            foreach (JArray dataItem in jsonData)
+            {
+                DataRow row = dt.NewRow();
+
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+
+                    if (dataItem[i].Type == JTokenType.Null || string.IsNullOrWhiteSpace(dataItem[i].ToString()))
+                    {
+                        if (dt.Columns[i].DataType == typeof(DateTime) || dt.Columns[i].DataType == typeof(decimal))
+                        {
+                            row[i] = DBNull.Value;
+                        }
+                        else
+                        {
+                            row[i] = dataItem[i];
+                        }
+
+                    }
+                    else
+                    {
+                        row[i] = dataItem[i];
+                    }
+                }
+                dt.Rows.Add(row);
+            }
         }
 
     }
