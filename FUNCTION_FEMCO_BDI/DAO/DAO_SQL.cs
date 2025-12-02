@@ -40,10 +40,9 @@ namespace FUNCTION_FEMCO_BDI.DAO
                 using (SqlConnection conn = new SqlConnection(cadenaConexion))
                 {
                     await conn.OpenAsync();
-
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
+                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
                     {
-
+                        bulkCopy.BulkCopyTimeout = 0;
                         bulkCopy.DestinationTableName = nombreTabla;
                         await bulkCopy.WriteToServerAsync(dataTable);
 
@@ -152,7 +151,32 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
             }
         }
-    
+        public async Task TruncateTable(string nombreTabla)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(cadenaConexion))
+                {
+                    await conn.OpenAsync();
+
+                    string query = $"TRUNCATE TABLE {nombreTabla}";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandTimeout = 1200; // 1200 segundos = 20 minutos
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Error", ex);
+            }
+
+        }
+
         public async Task<List<T>> getAllRows<T>(string nombreTabla) where T : class, new()
         {
             var lista = new List<T>();
