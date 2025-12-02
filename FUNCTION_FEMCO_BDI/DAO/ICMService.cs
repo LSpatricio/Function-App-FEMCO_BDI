@@ -196,7 +196,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
         }
 
 
-        public async Task<DataTable> ConsultaICMQuerytool(string tablaICM, string consulta, string modelo, int offset,string parametros = "")
+        public async Task<DataTable> ConsultaICMQuerytool(string tablaICM, string consulta, string modelo, int offset)
         {
             if (string.IsNullOrWhiteSpace(tablaICM))
             {
@@ -207,9 +207,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
             {
                 DataTable dt;
 
-                string consultaAjustada = $"{consulta} {parametros}";
-
-                HttpResponseMessage contenidoResponse =await ConstruirResquestQueryTool(consultaAjustada, offset, modelo);
+                HttpResponseMessage contenidoResponse =await ConstruirResquestQueryTool(consulta, offset, modelo);
 
 
                 if (!contenidoResponse.IsSuccessStatusCode)
