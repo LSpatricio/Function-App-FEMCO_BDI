@@ -50,33 +50,45 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT293
             string TablaICM = "_Result293";
             
 
-            string ConsultaICM = @"SELECT _ResultID,
-                                        IDStore
-                                        ,PayeeID_
-                                        ,IDCalculation
-                                        ,Weeks
-                                        ,Value
-                                        ,Proportional 
-                                    FROM " + TablaICM;
-
             string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" >= '{dateStartFormatted}'";
+            List<string> columnas = new List<string>
+            {
+                "_ResultID",
+                "IDStore",
+                "PayeeID_",
+                "IDCalculation",
+                "DateString",
+                "Weeks",
+                "Value",
+                "Proportional"
+            };
+            //string orderBy = @" ORDER BY  \""IDStore\"", \""PayeeID_\"", \""IDRole\"", \""DateString\"", \""Weeks\"" ";
+            string mensaje = "";
 
-            DataTable dt = new DataTable();
-            dt.Columns.Add("_ResultID", typeof(decimal));
-            dt.Columns.Add("IDStore", typeof(string));
-            dt.Columns.Add("PayeeID_", typeof(string));
-            dt.Columns.Add("IDCalculation", typeof(string));
-            dt.Columns.Add("Weeks", typeof(string));
-            dt.Columns.Add("Value", typeof(decimal));
-            dt.Columns.Add("Proportional", typeof(decimal));
-            _logger.LogInformation("Inicio a recoger datatable.");
-
-            dt = await _icmservice.ConsultarICM(TablaICM, ConsultaICM, modeloICM, dt, parametros);
-            _logger.LogInformation("fin consulta ICM.");
+            string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
+            string orderBy = $@" ORDER BY  {columnasFormateadas}";
 
 
-            string mensaje =  await _dao.bulkInserWithtDelete(dt, NOMBRE_TABLA);
-            _logger.LogInformation("BUlkinsert dao");
+            string countConsulta = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros);
+
+            string consultaICM = FuncionalidadICM.ConsultaAjustada(TablaICM, parametros, columnasFormateadas);
+
+            DataTable dtCount = await _icmservice.ConsultaICMQuerytool(TablaICM, countConsulta, modeloICM, 0, parametros);
+
+            int count = int.Parse(dtCount.Rows[0][0].ToString());
+
+            if (count == 0)
+            {
+                return "Sin datos por insertar en la tabla " + NOMBRE_TABLA;
+            }
+
+            await _dao.TruncateTable(NOMBRE_TABLA);
+
+            for (int i = 0; i < count; i += 500000)
+            {
+                DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, consultaICM, modeloICM, i, $"{parametros} {orderBy}");
+                mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
+            }
 
 
             return mensaje;
