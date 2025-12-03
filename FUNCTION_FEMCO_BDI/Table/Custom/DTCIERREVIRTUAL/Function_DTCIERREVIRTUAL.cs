@@ -135,10 +135,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-                response.StatusCode = HttpStatusCode.InternalServerError;
-                
+
                 await response.WriteAsJsonAsync(new
                 {
+                    StatusCode = HttpStatusCode.InternalServerError,
                     errorCode = "INTERNAL_ERROR",
                     message = "Ocurrió un error interno. Inténtalo más tarde.",
                 });

@@ -14,6 +14,7 @@ using Microsoft.Azure.Functions.Worker;
 using FUNCTION_FEMCO_BDI.Funcionalidades;
 using System.Globalization;
 using FUNCTION_FEMCO_BDI.Table.Custom._RESULT287.Classes;
+using Grpc.Core;
 
 
 namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
@@ -127,10 +128,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-                response.StatusCode = HttpStatusCode.InternalServerError;
                 
                 await response.WriteAsJsonAsync(new
                 {
+                    StatusCode = HttpStatusCode.InternalServerError,
                     errorCode = "INTERNAL_ERROR",
                     message = "Ocurrió un error interno. Inténtalo más tarde.",
                 });
