@@ -120,6 +120,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPERSONALDIVISION
                     errorCode = "INTERNAL_ERROR",
                     message = "Ocurrió un error interno. Inténtalo más tarde.",
                 });
+                response.StatusCode = HttpStatusCode.InternalServerError;
 
             }
             finally

@@ -137,6 +137,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT293
                     errorCode = "INTERNAL_ERROR",
                     message = "Ocurrió un error interno. Inténtalo más tarde.",
                 });
+                response.StatusCode = HttpStatusCode.InternalServerError;
 
             }
             finally
