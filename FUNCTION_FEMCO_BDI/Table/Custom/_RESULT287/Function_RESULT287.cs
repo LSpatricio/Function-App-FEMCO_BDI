@@ -149,31 +149,31 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los dias 3:00 pm
-        //[Function("BulkCreate_Timer__RESULT287")]
-        //public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 3:00 pm
+        [Function("BulkCreate_Timer__RESULT287")]
+        public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287.");
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287.");
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate__RESULT287();
-        //        _logger.LogInformation(mensaje);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT287: {Message}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT287.");
-        //    }
-        //}
+            try
+            {
+                string mensaje = await BulkCreate__RESULT287();
+                _logger.LogInformation(mensaje);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT287: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT287.");
+            }
+        }
 
-        //#endregion
+        #endregion
 
         public async Task<HttpResponseData> GetAllRows_RESULT287([HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetAllRows_RESULT287")] HttpRequestData req)
         {

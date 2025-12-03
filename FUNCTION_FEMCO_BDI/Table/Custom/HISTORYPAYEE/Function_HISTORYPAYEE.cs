@@ -161,60 +161,60 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
         #endregion
 
 
-        //#region BulkCreate como Azure Function Timer 
+        #region BulkCreate como Azure Function Timer 
 
-        ////Todos los dias 4:30am
-        //[Function("BulkCreate_Timer_HISTORYPAYEE_DailyTask")]
-        //public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 30 4 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 4:30am
+        [Function("BulkCreate_Timer_HISTORYPAYEE_DailyTask")]
+        public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 30 4 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_DailyTask.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_HISTORYPAYEE();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_DailyTask.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_DailyTask: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_HISTORYPAYEE();
+                _logger.LogInformation(mensaje);
 
 
-        //}
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_DailyTask: {Message}", ex.Message);
 
 
-        ////Lunes y Viernes 7:30am hasta las 11:30 pm, cada hora. 
-        //[Function("BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask")]
-        //public async Task BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask([TimerTrigger("0 30 7-23 * * 1,5")] TimerInfo myTimer)
-        //{
-
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask.");
+            }
 
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_HISTORYPAYEE();
-        //        _logger.LogInformation(mensaje);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask: {Message}", ex.Message);
+        }
 
 
-        //    }
+        //Lunes y Viernes 7:30am hasta las 11:30 pm, cada hora. 
+        [Function("BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask")]
+        public async Task BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask([TimerTrigger("0 30 7-23 * * 1,5")] TimerInfo myTimer)
+        {
+
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask.");
 
 
-        //}
-        //#endregion
+            try
+            {
+                string mensaje = await BulkCreate_HISTORYPAYEE();
+                _logger.LogInformation(mensaje);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
     }
 }

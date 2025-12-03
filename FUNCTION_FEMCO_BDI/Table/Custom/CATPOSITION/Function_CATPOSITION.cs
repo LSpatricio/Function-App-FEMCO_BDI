@@ -132,32 +132,32 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPOSITION
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los dias 3:00 pm
-        //[Function("BulkCreate_Timer_CATPOSITION")]
-        //public async Task BulkCreate_Timer_CATPOSITION([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 3:00 pm
+        [Function("BulkCreate_Timer_CATPOSITION")]
+        public async Task BulkCreate_Timer_CATPOSITION([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPOSITION.");
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPOSITION.");
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CATPOSITION();
-        //        _logger.LogInformation(mensaje);
+            try
+            {
+                string mensaje = await BulkCreate_CATPOSITION();
+                _logger.LogInformation(mensaje);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPOSITION: {Message}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _logger.LogInformation("Fin de la función BulkCreate_Timer_CATPOSITION.");
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPOSITION: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer_CATPOSITION.");
+            }
+        }
 
-        //#endregion
+        #endregion
 
 
 

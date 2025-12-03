@@ -143,32 +143,32 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGROLES
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los dias 3:00 pm
-        //[Function("BulkCreate_Timer_CFGROLES")]
-        //public async Task BulkCreate_Timer_CFGROLES([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 3:00 pm
+        [Function("BulkCreate_Timer_CFGROLES")]
+        public async Task BulkCreate_Timer_CFGROLES([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGROLES.");
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGROLES.");
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CFGROLES();
-        //        _logger.LogInformation(mensaje);
+            try
+            {
+                string mensaje = await BulkCreate_CFGROLES();
+                _logger.LogInformation(mensaje);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGROLES: {Message}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGROLES.");
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGROLES: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGROLES.");
+            }
+        }
 
-        //#endregion
+        #endregion
 
 
 

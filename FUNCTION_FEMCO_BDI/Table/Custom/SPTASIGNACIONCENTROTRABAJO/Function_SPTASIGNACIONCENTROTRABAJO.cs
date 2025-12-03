@@ -133,35 +133,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SPTASIGNACIONCENTROTRABAJO
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////3 veces por dia, 6, 9 y 2 pm, 
+        //3 veces por dia, 6, 9 y 2 pm, 
 
-        //[Function("BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO")]
-        //public async Task BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO([TimerTrigger("0 0 6,9,14 * * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO")]
+        public async Task BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO([TimerTrigger("0 0 6,9,14 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_SPTASIGNACIONCENTROTRABAJO();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_SPTASIGNACIONCENTROTRABAJO();
+                _logger.LogInformation(mensaje);
 
 
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
 

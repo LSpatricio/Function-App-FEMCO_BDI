@@ -191,35 +191,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
         #endregion
 
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Se ejecuta diario a las 8:30 AM y 3:30 PM
-        //[Function("BulkCreate_Timer_DATESTRINGPERIODS")]
-        //public async Task BulkCreate_Timer_DATESTRINGPERIODS_DailyTask([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
-        //{
+        //Se ejecuta diario a las 8:30 AM y 3:30 PM
+        [Function("BulkCreate_Timer_DATESTRINGPERIODS")]
+        public async Task BulkCreate_Timer_DATESTRINGPERIODS_DailyTask([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATESTRINGPERIODS_DailyTask.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_DATESTRINGPERIODS()
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATESTRINGPERIODS_DailyTask.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATESTRINGPERIODS_DailyTask: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_DATESTRINGPERIODS();
+                _logger.LogInformation(mensaje);
 
 
-        //}
+            }
+            catch (Exception ex)
+            {
 
-        //#endregion
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATESTRINGPERIODS_DailyTask: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+
+        #endregion
     }
 
 

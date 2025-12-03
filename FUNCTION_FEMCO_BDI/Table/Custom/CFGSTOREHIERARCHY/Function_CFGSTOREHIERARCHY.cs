@@ -135,32 +135,32 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGSTOREHIERARCHY
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los dias 3:00 pm
-        //[Function("BulkCreate_Timer_CFGSTOREHIERARCHY")]
-        //public async Task BulkCreate_Timer_CFGSTOREHIERARCHY([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 3:00 pm
+        [Function("BulkCreate_Timer_CFGSTOREHIERARCHY")]
+        public async Task BulkCreate_Timer_CFGSTOREHIERARCHY([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGSTOREHIERARCHY.");
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGSTOREHIERARCHY.");
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CFGSTOREHIERARCHY();
-        //        _logger.LogInformation(mensaje);
+            try
+            {
+                string mensaje = await BulkCreate_CFGSTOREHIERARCHY();
+                _logger.LogInformation(mensaje);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGSTOREHIERARCHY: {Message}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGSTOREHIERARCHY.");
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGSTOREHIERARCHY: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGSTOREHIERARCHY.");
+            }
+        }
 
-        //#endregion
+        #endregion
 
 
 

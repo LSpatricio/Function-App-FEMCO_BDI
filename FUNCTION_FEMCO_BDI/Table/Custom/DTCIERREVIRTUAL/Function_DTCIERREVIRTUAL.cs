@@ -156,35 +156,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Del 1 al 4 del mes, cada 20 min
+        //Del 1 al 4 del mes, cada 20 min
 
-        //[Function("BulkCreate_Timer_DTCIERREVIRTUAL")]
-        //public async Task BulkCreate_Timer_DTCIERREVIRTUAL([TimerTrigger("0 20,50 * 1-4 * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_DTCIERREVIRTUAL")]
+        public async Task BulkCreate_Timer_DTCIERREVIRTUAL([TimerTrigger("0 20,50 * 1-4 * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_DTCIERREVIRTUAL.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_DTCIERREVIRTUAL();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_DTCIERREVIRTUAL.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DTCIERREVIRTUAL: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_DTCIERREVIRTUAL();
+                _logger.LogInformation(mensaje);
 
 
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DTCIERREVIRTUAL: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
 

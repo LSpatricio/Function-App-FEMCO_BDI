@@ -139,35 +139,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYREVISION
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
-        //[Function("BulkCreate_Timer_HISTORYREVISION")]
-        //public async Task BulkCreate_Timer_HISTORYREVISION([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_HISTORYREVISION")]
+        public async Task BulkCreate_Timer_HISTORYREVISION([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYREVISION.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_HISTORYREVISION();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYREVISION.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYREVISION: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_HISTORYREVISION();
+                _logger.LogInformation(mensaje);
 
 
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYREVISION: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
 

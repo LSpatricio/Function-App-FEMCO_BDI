@@ -141,39 +141,39 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.AUDIT_
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
-        //[Function("BulkCreate_Timer_AUDIT_")]
-        //public async Task BulkCreate_Timer_AUDIT_DailyTask([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
-        //{
-        //    //Expresion cron
-        //    //azure
-        //    // segundos , minutos, horas, dias, mes, dia (Lunes a Domingo)
+        [Function("BulkCreate_Timer_AUDIT_")]
+        public async Task BulkCreate_Timer_AUDIT_DailyTask([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        {
+            //Expresion cron
+            //azure
+            // segundos , minutos, horas, dias, mes, dia (Lunes a Domingo)
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_AUDIT_");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_AUDIT_();
-        //        _logger.LogInformation(mensaje);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_AUDIT: {Message}", ex.Message);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_AUDIT_");
 
 
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_AUDIT_();
+                _logger.LogInformation(mensaje);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_AUDIT: {Message}", ex.Message);
 
 
-        //}
+            }
 
 
-        //#endregion
+        }
+
+
+        #endregion
 
 
 

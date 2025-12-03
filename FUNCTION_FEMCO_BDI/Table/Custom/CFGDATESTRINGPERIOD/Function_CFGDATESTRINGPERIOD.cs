@@ -169,35 +169,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGDATESTRINGPERIOD
         #endregion
 
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Se ejecuta diario a las 8:30 AM y 3:30 PM
-        //[Function("BulkCreate_Timer_CFGDATESTRINGPERIOD")]
-        //public async Task BulkCreate_Timer_CFGDATESTRINGPERIOD([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
-        //{
+        //Se ejecuta diario a las 8:30 AM y 3:30 PM
+        [Function("BulkCreate_Timer_CFGDATESTRINGPERIOD")]
+        public async Task BulkCreate_Timer_CFGDATESTRINGPERIOD([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGDATESTRINGPERIOD.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CFGDATESTRINGPERIOD();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGDATESTRINGPERIOD.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGDATESTRINGPERIOD: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_CFGDATESTRINGPERIOD();
+                _logger.LogInformation(mensaje);
 
 
-        //}
+            }
+            catch (Exception ex)
+            {
 
-        //#endregion
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGDATESTRINGPERIOD: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+
+        #endregion
     }
 
 

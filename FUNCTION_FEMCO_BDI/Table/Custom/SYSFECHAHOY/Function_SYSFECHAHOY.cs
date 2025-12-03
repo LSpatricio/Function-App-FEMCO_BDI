@@ -129,35 +129,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSFECHAHOY
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////3 veces al día, todos los días
+        //3 veces al día, todos los días
 
-        //[Function("BulkCreate_Timer_SYSFECHAHOY")]
-        //public async Task BulkCreate_Timer_SYSFECHAHOY([TimerTrigger("0 0 */8 * * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_SYSFECHAHOY")]
+        public async Task BulkCreate_Timer_SYSFECHAHOY([TimerTrigger("0 0 */8 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_SYSFECHAHOY.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_SYSFECHAHOY();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_SYSFECHAHOY.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SYSFECHAHOY: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_SYSFECHAHOY();
+                _logger.LogInformation(mensaje);
 
 
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SYSFECHAHOY: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
 

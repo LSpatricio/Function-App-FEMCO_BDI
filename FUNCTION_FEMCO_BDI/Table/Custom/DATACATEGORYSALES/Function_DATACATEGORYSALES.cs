@@ -149,61 +149,61 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATACATEGORYSALES
         #endregion
 
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////1 vez al mes, el dia 12 una ejecución.
+        //1 vez al mes, el dia 12 una ejecución.
 
-        //[Function("BulkCreate_Timer_DATACATEGORYSALES_Day12")]
-        //public async Task BulkCreate_Timer_DATACATEGORYSALES_Day12([TimerTrigger("0 30 23 12 * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_DATACATEGORYSALES_Day12")]
+        public async Task BulkCreate_Timer_DATACATEGORYSALES_Day12([TimerTrigger("0 30 23 12 * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATACATEGORYSALES_Day12.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_DATACATEGORYSALES();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATACATEGORYSALES_Day12.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATACATEGORYSALES_Day12: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_DATACATEGORYSALES();
+                _logger.LogInformation(mensaje);
 
 
-        //}
+            }
+            catch (Exception ex)
+            {
 
-        ////1 vez al mes, el dia 13 cada 4 horas, desde las 3:30 AM hasta las 7:30 PM
-
-        //[Function("BulkCreate_Timer_DATACATEGORYSALES_Day13")]
-        //public async Task BulkCreate_Timer_DATACATEGORYSALES_Day13([TimerTrigger("0 30 3,7,11,15,19 13 * *")] TimerInfo myTimer)
-        //{
-
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATACATEGORYSALES_Day13.");
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATACATEGORYSALES_Day12: {Message}", ex.Message);
 
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_DATACATEGORYSALES();
-        //        _logger.LogInformation(mensaje);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATACATEGORYSALES_Day13: {Message}", ex.Message);
+            }
 
 
-        //    }
+        }
+
+        //1 vez al mes, el dia 13 cada 4 horas, desde las 3:30 AM hasta las 7:30 PM
+
+        [Function("BulkCreate_Timer_DATACATEGORYSALES_Day13")]
+        public async Task BulkCreate_Timer_DATACATEGORYSALES_Day13([TimerTrigger("0 30 3,7,11,15,19 13 * *")] TimerInfo myTimer)
+        {
+
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATACATEGORYSALES_Day13.");
 
 
-        //}
-        //#endregion
+            try
+            {
+                string mensaje = await BulkCreate_DATACATEGORYSALES();
+                _logger.LogInformation(mensaje);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_DATACATEGORYSALES_Day13: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
 

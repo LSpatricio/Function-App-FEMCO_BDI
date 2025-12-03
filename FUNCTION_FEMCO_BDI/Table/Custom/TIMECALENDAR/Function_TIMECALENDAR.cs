@@ -133,35 +133,35 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMECALENDAR
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////1 vez al día, del 1 al 7 del mes, 5 pm
+        //1 vez al día, del 1 al 7 del mes, 5 pm
 
-        //[Function("BulkCreate_Timer_TIMECALENDAR")]
-        //public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 0 17 1-7 * *")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_TIMECALENDAR")]
+        public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 0 17 1-7 * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_TIMECALENDAR.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_TIMECALENDAR();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_TIMECALENDAR.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_TIMECALENDAR: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_TIMECALENDAR();
+                _logger.LogInformation(mensaje);
 
 
-        //}
-        //#endregion
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_TIMECALENDAR: {Message}", ex.Message);
+
+
+            }
+
+
+        }
+        #endregion
 
 
     }

@@ -135,63 +135,63 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPERSONALDIVISION
         #endregion
 
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los miercoles, inicio a las 11:30 PM
+        //Todos los miercoles, inicio a las 11:30 PM
 
-        //[Function("BulkCreate_Timer_CATPERSONALDIVISION_Wednesday")]
-        //public async Task BulkCreate_Timer_CATPERSONALDIVISION_Wednesday([TimerTrigger("0 30 23 * * 3")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_CATPERSONALDIVISION_Wednesday")]
+        public async Task BulkCreate_Timer_CATPERSONALDIVISION_Wednesday([TimerTrigger("0 30 23 * * 3")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPERSONALDIVISION_Wednesday.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CATPERSONALDIVISION();
-        //        _logger.LogInformation(mensaje);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPERSONALDIVISION_Wednesday.");
 
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPERSONALDIVISION_Wednesday: {Message}", ex.Message);
-
-
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_CATPERSONALDIVISION();
+                _logger.LogInformation(mensaje);
 
 
-        //}
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPERSONALDIVISION_Wednesday: {Message}", ex.Message);
+
+
+            }
+
+
+        }
 
 
 
-        ////Todos los jueves, inicio a las 12:30 AM hasta las 11:30 PM
+        //Todos los jueves, inicio a las 12:30 AM hasta las 11:30 PM
 
-        //[Function("BulkCreate_Timer_CATPERSONALDIVISION_Thursday")]
-        //public async Task BulkCreate_Timer_CATPERSONALDIVISION_Thursday([TimerTrigger("0 30 0-23 * * 4")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_CATPERSONALDIVISION_Thursday")]
+        public async Task BulkCreate_Timer_CATPERSONALDIVISION_Thursday([TimerTrigger("0 30 0-23 * * 4")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPERSONALDIVISION_Thursday.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CATPERSONALDIVISION();
-        //        _logger.LogInformation(mensaje);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPERSONALDIVISION_Thursday: {Message}", ex.Message);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPERSONALDIVISION_Thursday.");
 
 
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_CATPERSONALDIVISION();
+                _logger.LogInformation(mensaje);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CATPERSONALDIVISION_Thursday: {Message}", ex.Message);
 
 
-        //}
-        //#endregion
+            }
+
+
+        }
+        #endregion
 
 
     }

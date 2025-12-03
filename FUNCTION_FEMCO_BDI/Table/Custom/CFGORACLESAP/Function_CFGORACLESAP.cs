@@ -137,32 +137,32 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGORACLESAP
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Todos los dias 3:00 pm
-        //[Function("BulkCreate_Timer_CFGORACLESAP")]
-        //public async Task BulkCreate_Timer_CFGORACLESAP([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
-        //{
+        //Todos los dias 3:00 pm
+        [Function("BulkCreate_Timer_CFGORACLESAP")]
+        public async Task BulkCreate_Timer_CFGORACLESAP([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGORACLESAP.");
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGORACLESAP.");
 
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_CFGORACLESAP();
-        //        _logger.LogInformation(mensaje);
+            try
+            {
+                string mensaje = await BulkCreate_CFGORACLESAP();
+                _logger.LogInformation(mensaje);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGORACLESAP: {Message}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGORACLESAP.");
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_CFGORACLESAP: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer_CFGORACLESAP.");
+            }
+        }
 
-        //#endregion
+        #endregion
 
 
 

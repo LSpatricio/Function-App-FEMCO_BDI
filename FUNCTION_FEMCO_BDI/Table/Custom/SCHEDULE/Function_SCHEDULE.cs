@@ -146,34 +146,34 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SCHEDULE
         }
         #endregion
 
-        //#region BulkCreate como Azure Function Timer.
+        #region BulkCreate como Azure Function Timer.
 
-        ////Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
-        //[Function("BulkCreate_Timer_SCHEDULE")]
-        //public async Task BulkCreate_Timer_SCHEDULE([TimerTrigger("0 30 8,15 * * 1-5")] TimerInfo myTimer)
-        //{
+        [Function("BulkCreate_Timer_SCHEDULE")]
+        public async Task BulkCreate_Timer_SCHEDULE([TimerTrigger("0 30 8,15 * * 1-5")] TimerInfo myTimer)
+        {
 
-        //    _logger.LogInformation("Inicio de la función BulkCreate_Timer_SCHEDULE.");
-
-
-        //    try
-        //    {
-        //        string mensaje = await BulkCreate_SCHEDULE();
-        //        _logger.LogInformation(mensaje);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SCHEDULE: {Message}", ex.Message);
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_SCHEDULE.");
 
 
-        //    }
+            try
+            {
+                string mensaje = await BulkCreate_SCHEDULE();
+                _logger.LogInformation(mensaje);
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_SCHEDULE: {Message}", ex.Message);
 
 
-        //}
-        //#endregion
+            }
+
+
+        }
+        #endregion
 
 
 
