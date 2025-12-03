@@ -162,33 +162,6 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMELOCK
 
         }
         #endregion
-        [Function("BulkCreate_Timer_TIMELOCKPrueba")]
-        public async Task BulkCreate_Timer_TIMELOCKPrueba([TimerTrigger("0 30 8,15 * * 5")] TimerInfo myTimer)
-        {
-
-            _logger.LogInformation("Inicio de la función BulkCreate_Timer_TIMELOCKPrueba.");
-
-
-            try
-            {
-                string mensaje = await BulkCreate_TIMELOCK();
-                _logger.LogInformation(mensaje);
-
-
-            }
-            catch (Exception ex)
-            {
-
-                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_TIMELOCKPrueba: {Message}", ex.Message);
-
-
-            }
-
-
-        }
-
-
-
-
+      
     }
 }
