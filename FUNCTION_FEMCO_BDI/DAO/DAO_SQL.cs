@@ -29,76 +29,32 @@ namespace FUNCTION_FEMCO_BDI.DAO
         /// <exception cref="InvalidOperationException"></exception>
         public async Task<string> bulkInsert(DataTable dataTable, string nombreTabla)
         {
-             try
-                        {
-            if (dataTable.Rows.Count == 0)
-            {
-                return "Sin datos por insertar";
-            }
-                else { 
-           
-                using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                {
-                    await conn.OpenAsync();
-                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
-                    {
-                        bulkCopy.BulkCopyTimeout = 0;
-                        bulkCopy.DestinationTableName = nombreTabla;
-                        await bulkCopy.WriteToServerAsync(dataTable);
-
-                    }     
-                }
-                    return "Inserción completada correctamente";
-
-                }
-
-            }
-            
-            catch (Exception ex)
-            {
-
-                throw new InvalidOperationException($"Error al insertar los datos", ex);
-
-            }
-        }
-
-
-        public async Task<string> bulkInserWithtDelete(DataTable dataTable, string nombreTabla)
-        {
             try
             {
-
                 if (dataTable.Rows.Count == 0)
                 {
                     return "Sin datos por insertar";
                 }
-
                 else
                 {
-
-                    int r = await deleteAll(nombreTabla);
 
                     using (SqlConnection conn = new SqlConnection(cadenaConexion))
                     {
                         await conn.OpenAsync();
-
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
                         {
-
+                            bulkCopy.BulkCopyTimeout = 0;
                             bulkCopy.DestinationTableName = nombreTabla;
                             await bulkCopy.WriteToServerAsync(dataTable);
 
                         }
-                    
                     }
                     return "Inserción completada correctamente";
+
                 }
 
-            
-
-            
-               
             }
+
             catch (Exception ex)
             {
 
@@ -107,50 +63,6 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
         }
 
-
-        public async Task<string> bulkInserWithtDelete(DataTable dataTable, string nombreTabla, string parametros)
-        {
-            try
-            {
-
-                if (dataTable.Rows.Count == 0)
-                {
-                    return "Sin datos por insertar";
-                }
-
-                else
-                {
-
-                    int r = await deleteAllWithParams(nombreTabla, parametros);
-
-                    using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                    {
-                        await conn.OpenAsync();
-
-                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(conn))
-                        {
-
-                            bulkCopy.DestinationTableName = nombreTabla;
-                            await bulkCopy.WriteToServerAsync(dataTable);
-
-                        }
-
-                    }
-                    return "Inserción completada correctamente";
-                }
-
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-
-                throw new InvalidOperationException($"Error al insertar los datos", ex);
-
-            }
-        }
         public async Task TruncateTable(string nombreTabla)
         {
             try
@@ -238,167 +150,6 @@ namespace FUNCTION_FEMCO_BDI.DAO
             return lista;
         }
 
-        /// <summary>
-        /// Eliminar por FECHAINICIO y FECHAFIN o FECHAINICIAL FECHAFINAL
-        /// </summary>
-        /// <param name="nombreTabla"></param>
-        /// <param name="fechaInicio"></param>
-        /// <param name="fechaFin"></param>
-        /// <param name="fechaInicioNombre"></param>
-        /// <param name="fechaFinNombre"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        //Formato fecha MM-DD-YYYY o YYYY-MM-DD 
-        public async Task<int> deleteRangeDates(string nombreTabla,DateTime? fechaInicio, DateTime? fechaFin, string fechaInicioNombre, string fechaFinNombre)
-        {
-            
-
-            int r = 0;
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                {
-                    await conn.OpenAsync();
-
-                    string query = $@"DELETE FROM {nombreTabla} WHERE {fechaInicioNombre} >= @{fechaInicioNombre} AND {fechaFinNombre} <= @{fechaFinNombre}";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue($"@{fechaInicioNombre}", fechaInicio);
-                        cmd.Parameters.AddWithValue($"@{fechaFinNombre}", fechaFin);
-
-
-                        r = await cmd.ExecuteNonQueryAsync();
-
-
-                    }
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Error", ex);
-            }
-           
-
-            return r;
-        }
-
-        /// <summary>
-        /// Método que eliminar tabla completa.
-        /// </summary>
-        /// <param name="nombreTabla"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-
-        public async Task<int> deleteAll(string nombreTabla)
-        {
-            int r = 0;
-
-            try 
-            {
-
-                using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                {
-                    await conn.OpenAsync();
-
-
-                    string query = $"DELETE FROM {nombreTabla}";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandTimeout = 1200; // 1200 segundos = 20 minutos
-
-                        r = await cmd.ExecuteNonQueryAsync();
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Error", ex);
-            }
-
-            return r;
-
-        }
-
-
-        public async Task<int> deleteAllWithParams(string nombreTabla, string parametros)
-        {
-            int r = 0;
-
-            try
-            {
-
-                using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                {
-                    await conn.OpenAsync();
-
-
-                    string query = $"DELETE FROM {nombreTabla} WHERE {parametros}";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        r = await cmd.ExecuteNonQueryAsync();
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Error", ex);
-            }
-
-            return r;
-
-        }
-
-
-        /// <summary>
-        /// Eliminar por FECHA
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="nombreTabla"></param>
-        /// <param name="fecha"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        //Puede ser tipo Date o tipo String
-        public async Task<int> deleteDate<T>(string nombreTabla, T fecha )
-        {
-
-            int r = 0;
-
-            try 
-            {
-                using (SqlConnection conn = new SqlConnection(cadenaConexion))
-                {
-                    await conn.OpenAsync();
-
-                    string query = $@"DELETE FROM {nombreTabla} WHERE FECHA = @FECHA";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-
-                        cmd.Parameters.AddWithValue("@FECHA", fecha);
-
-                        r = await cmd.ExecuteNonQueryAsync();
-
-
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                throw new InvalidOperationException($"Error" , ex);
-            }
-            return r;
-
-
-        }
-
     }
-
 
 }

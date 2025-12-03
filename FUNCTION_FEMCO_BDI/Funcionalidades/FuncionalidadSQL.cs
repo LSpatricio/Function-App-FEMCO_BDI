@@ -47,39 +47,6 @@ namespace FUNCTION_FEMCO_BDI.NewFolder
 
         }
 
-
-        public static List<DataTable> DividirDataTable(DataTable dataTable, int tamaño)
-        {
-            List<DataTable> bloques = new List<DataTable>();
-
-            // Crear una estructura de DataTable con las mismas columnas que el original
-            DataTable batchTable = dataTable.Clone();
-
-            int counter = 0;
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                batchTable.ImportRow(row);
-                counter++;
-
-                // Si el lote alcanza el tamaño especificado, se guarda y se crea uno nuevo
-                if (counter == tamaño)
-                {
-                    bloques.Add(batchTable);
-                    batchTable = dataTable.Clone(); // Crear un nuevo lote limpio
-                    counter = 0;
-                }
-            }
-
-            // Agregar cualquier lote restante
-            if (batchTable.Rows.Count > 0)
-            {
-                bloques.Add(batchTable);
-            }
-
-            return bloques;
-        }
-
         public static DataTable getdates()
         {
 
