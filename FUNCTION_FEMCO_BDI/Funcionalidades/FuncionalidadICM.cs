@@ -87,7 +87,7 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
                     {
                         if (item[i].Type == JTokenType.Null || string.IsNullOrWhiteSpace(item[i].ToString()))
                         {
-                            if (dt.Columns[i].DataType == typeof(DateTime) || dt.Columns[i].DataType == typeof(decimal))
+                            if (dt.Columns[i].DataType == typeof(DateTime) || dt.Columns[i].DataType == typeof(decimal) || dt.Columns[i].DataType == typeof(Int32))
                             {
                                 row[i] = DBNull.Value;
                             }
@@ -126,6 +126,9 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
                     type = typeof(DateTime);
                     break;
                 case "decimal":
+                    type = typeof(float);
+                    break;
+                case "int":
                     type = typeof(float);
                     break;
                 case "string":
@@ -253,21 +256,25 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
 
-                    if (dataItem[i].Type == JTokenType.Null || string.IsNullOrWhiteSpace(dataItem[i].ToString()))
-                    {
-                        if (dt.Columns[i].DataType == typeof(DateTime) || dt.Columns[i].DataType == typeof(decimal))
-                        {
-                            row[i] = DBNull.Value;
-                        }
-                        else
-                        {
-                            row[i] = dataItem[i];
-                        }
+                    var token = dataItem[i];
 
+                    // Si es null o vacío → DBNull
+                    if (token.Type == JTokenType.Null || string.IsNullOrWhiteSpace(token.ToString()))
+                    {
+                        row[i] = DBNull.Value;
                     }
                     else
                     {
-                        row[i] = dataItem[i];
+                        var colType = dt.Columns[i].DataType;
+
+                        if (colType == typeof(Int32))
+                            row[i] = token.ToObject<int>();
+                        else if (colType == typeof(decimal))
+                            row[i] = token.ToObject<decimal>();
+                        else if (colType == typeof(DateTime))
+                            row[i] = token.ToObject<DateTime>();
+                        else
+                            row[i] = token.ToString(); // para strings u otros tipos
                     }
                 }
                 dt.Rows.Add(row);
