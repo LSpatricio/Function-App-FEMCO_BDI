@@ -57,7 +57,6 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT293
                 "IDStore",
                 "PayeeID_",
                 "IDCalculation",
-                "DateString",
                 "Weeks",
                 "Value",
                 "Proportional"

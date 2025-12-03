@@ -44,13 +44,6 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGROLES
 
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "CfgRoles";
-            string ConsultaICM = @"SELECT IDSociety
-                                          ,IDRole
-                                          ,IDJobKey
-                                          ,DateStart
-                                          ,DateEnd
-                                       FROM " + TablaICM;
-
             List<string> columnas = new List<string>
             {
                 "IDSociety",

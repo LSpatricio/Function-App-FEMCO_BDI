@@ -127,7 +127,14 @@ namespace FUNCTION_FEMCO_BDI.Funcionalidades
                     // Si es null o vacío → DBNull
                     if (token.Type == JTokenType.Null || string.IsNullOrWhiteSpace(token.ToString()))
                     {
-                        row[i] = DBNull.Value;
+                        if (dt.Columns[i].DataType==typeof(string))
+                        {
+                            row[i] = token.ToString();
+                        }
+                        else
+                        {
+                            row[i] = DBNull.Value;
+                        }
                     }
                     else
                     {
