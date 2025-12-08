@@ -6,7 +6,7 @@ name: Build and deploy dotnet core app to Azure Function App - FEMCOBDIDEV
 on:
   push:
     branches:
-      - develop
+      - sandbox/develop
   workflow_dispatch:
 
 env:
@@ -38,6 +38,7 @@ jobs:
         id: fa
         with:
           app-name: 'FEMCOBDIDEV'
-          slot-name: 'Production'
+          slot-name: 'test-dev'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_221075162CAA44DDB6DF890335F6A9D8 }}
