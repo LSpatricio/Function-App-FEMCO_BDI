@@ -165,7 +165,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
 
         //Todos los dias 4:30am
         [Function("BulkCreate_Timer_HISTORYPAYEE_DailyTask")]
-        public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 30 4 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 35 12 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_DailyTask.");
