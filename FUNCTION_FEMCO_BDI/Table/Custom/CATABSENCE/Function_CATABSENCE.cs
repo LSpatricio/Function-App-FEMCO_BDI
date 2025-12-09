@@ -139,7 +139,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATABSENCE
         //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
         [Function("BulkCreate_Timer_CATABSENCE")]
-        public async Task BulkCreate_Timer_CATABSENCE([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CATABSENCE([TimerTrigger("0 40 11 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATABSENCE.");
