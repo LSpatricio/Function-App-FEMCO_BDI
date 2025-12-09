@@ -138,7 +138,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMECALENDAR
         //1 vez al día, del 1 al 7 del mes, 5 pm
 
         [Function("BulkCreate_Timer_TIMECALENDAR")]
-        public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 0 17 1-7 * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_TIMECALENDAR.");

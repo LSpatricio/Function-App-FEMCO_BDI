@@ -146,7 +146,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.AUDIT_
         //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
         [Function("BulkCreate_Timer_AUDIT_")]
-        public async Task BulkCreate_Timer_AUDIT_DailyTask([TimerTrigger("0 40 9 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_AUDIT_DailyTask([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
             //Expresion cron
             //azure

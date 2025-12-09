@@ -138,7 +138,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SPTASIGNACIONCENTROTRABAJO
         //3 veces por dia, 6, 9 y 2 pm, 
 
         [Function("BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO")]
-        public async Task BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO([TimerTrigger("0 0 6,9,14 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_SPTASIGNACIONCENTROTRABAJO.");

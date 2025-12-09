@@ -195,7 +195,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATESTRINGPERIODS
 
         //Se ejecuta diario a las 8:30 AM y 3:30 PM
         [Function("BulkCreate_Timer_DATESTRINGPERIODS")]
-        public async Task BulkCreate_Timer_DATESTRINGPERIODS_DailyTask([TimerTrigger("0 40 11 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_DATESTRINGPERIODS_DailyTask([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATESTRINGPERIODS_DailyTask.");

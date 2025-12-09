@@ -173,7 +173,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGDATESTRINGPERIOD
 
         //Se ejecuta diario a las 8:30 AM y 3:30 PM
         [Function("BulkCreate_Timer_CFGDATESTRINGPERIOD")]
-        public async Task BulkCreate_Timer_CFGDATESTRINGPERIOD([TimerTrigger("0 10 10 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CFGDATESTRINGPERIOD([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGDATESTRINGPERIOD.");

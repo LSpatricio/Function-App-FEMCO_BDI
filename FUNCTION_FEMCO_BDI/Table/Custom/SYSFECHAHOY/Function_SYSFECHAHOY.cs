@@ -134,7 +134,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SYSFECHAHOY
         //3 veces al día, todos los días
 
         [Function("BulkCreate_Timer_SYSFECHAHOY")]
-        public async Task BulkCreate_Timer_SYSFECHAHOY([TimerTrigger("0 0 */8 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_SYSFECHAHOY([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_SYSFECHAHOY.");

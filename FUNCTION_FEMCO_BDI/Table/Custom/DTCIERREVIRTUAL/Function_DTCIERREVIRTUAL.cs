@@ -161,7 +161,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
         //Del 1 al 4 del mes, cada 20 min
 
         [Function("BulkCreate_Timer_DTCIERREVIRTUAL")]
-        public async Task BulkCreate_Timer_DTCIERREVIRTUAL([TimerTrigger("0 35 12 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_DTCIERREVIRTUAL([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_DTCIERREVIRTUAL.");

@@ -137,7 +137,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CONFIGPUESTOFUNCION
 
         //Todos los dias 3:00 pm
         [Function("BulkCreate_Timer_CONFIGPUESTOFUNCION")]
-        public async Task BulkCreate_Timer_CONFIGPUESTOFUNCION([TimerTrigger("0 40 11 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CONFIGPUESTOFUNCION([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CONFIGPUESTOFUNCION.");

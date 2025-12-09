@@ -154,7 +154,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DATACATEGORYSALES
         //1 vez al mes, el dia 12 una ejecución.
 
         [Function("BulkCreate_Timer_DATACATEGORYSALES_Day12")]
-        public async Task BulkCreate_Timer_DATACATEGORYSALES_Day12([TimerTrigger("0 40 11 9 12 *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_DATACATEGORYSALES_Day12([TimerTrigger("0 50 16 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_DATACATEGORYSALES_Day12.");
