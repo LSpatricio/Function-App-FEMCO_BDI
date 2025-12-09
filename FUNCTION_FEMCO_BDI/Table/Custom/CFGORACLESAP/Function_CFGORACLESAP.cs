@@ -141,7 +141,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGORACLESAP
 
         //Todos los dias 3:00 pm
         [Function("BulkCreate_Timer_CFGORACLESAP")]
-        public async Task BulkCreate_Timer_CFGORACLESAP([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CFGORACLESAP([TimerTrigger("0 10 10 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGORACLESAP.");

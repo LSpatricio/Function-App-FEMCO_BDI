@@ -140,7 +140,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPERSONALDIVISION
         //Todos los miercoles, inicio a las 11:30 PM
 
         [Function("BulkCreate_Timer_CATPERSONALDIVISION_Wednesday")]
-        public async Task BulkCreate_Timer_CATPERSONALDIVISION_Wednesday([TimerTrigger("0 30 23 * * 3")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CATPERSONALDIVISION_Wednesday([TimerTrigger("0 10 10 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPERSONALDIVISION_Wednesday.");
