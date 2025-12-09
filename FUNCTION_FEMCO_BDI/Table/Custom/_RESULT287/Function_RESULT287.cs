@@ -153,7 +153,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
 
         //Todos los dias 3:00 pm
         [Function("BulkCreate_Timer__RESULT287")]
-        public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 0 12 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 40 9 9 12 *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287.");
