@@ -15,6 +15,7 @@ env:
 
 jobs:
   build-and-deploy:
+    if: github.repository == 'LSpatricio/Function-App-FEMCO_BDI'
     runs-on: windows-latest
     
     steps:
@@ -40,4 +41,5 @@ jobs:
           app-name: 'FEMCOBDIQA'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8826373252C24D9ABE5BF83539944DEC }}
