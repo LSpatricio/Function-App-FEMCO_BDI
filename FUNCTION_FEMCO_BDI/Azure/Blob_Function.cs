@@ -67,7 +67,7 @@ namespace FUNCTION_FEMCO_BDI.Azure
                         await Funcionalidad_Encriptacion.EncryptCsvToStream(stream, encryptedStream, publicKey, name);
                     }
                     //Subir archivo a otro contenedor
-                    BlobClient blobEncriptado = await _blobservice.UploadBlobAsync(encryptedStream, blobServiceClient, $"{name}.pgp", "sqlmi-sftp-csv-base-encripted");
+                    BlobClient blobEncriptado = await _blobservice.UploadBlobAsync(encryptedStream, blobServiceClient, $"{name}.pgp", "sqlmi-sftp-csv-base-encrypted");
 
                     IDictionary<string, string> metaDataBlob = await _blobservice.ObtenerMetadata(blobEncriptado);
 
