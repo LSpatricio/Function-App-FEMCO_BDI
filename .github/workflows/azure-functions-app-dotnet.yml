@@ -41,6 +41,9 @@ jobs:
       with:
         name: app-artifact
         path: ./publish
+        run-id: ${{ github.event.workflow_run.id }}
+        repository: ${{ github.repository }}
+
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
       id: deploy-to-function-app
@@ -60,6 +63,8 @@ jobs:
         with:
           name: app-artifact
           path: ./publish
+          run-id: ${{ github.event.workflow_run.id }}
+          repository: ${{ github.repository }}
 
       - name: Deploy to QA
         uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
@@ -79,6 +84,8 @@ jobs:
         with:
           name: app-artifact
           path: ./publish
+          run-id: ${{ github.event.workflow_run.id }}
+          repository: ${{ github.repository }}
 
       - name: Deploy to PRD
         uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
