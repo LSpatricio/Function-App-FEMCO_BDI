@@ -20,7 +20,7 @@ name: Deploy DotNet project to Azure Function App
 
 on:
   workflow_run:
-    workflows: [CI Azure Function]
+    workflows: [CI Azure Functiontest]
     types: [completed]
   workflow_dispatch:
   
