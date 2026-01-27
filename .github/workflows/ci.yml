@@ -5,9 +5,8 @@ name: CI Azure Function
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "fix/deploy-workflow" ]
+
 
 env:
   DOTNET_VERSION: '6.0.x' # set this to the dotnet version to use
@@ -30,7 +29,7 @@ jobs:
     - name: Publish
       run: dotnet publish --configuration Release --no-build --output ./publish
     - name: Upload build artifact
-      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      uses: actions/upload-artifact@v4
       with:
         name: app-artifact
         path: ./publish
