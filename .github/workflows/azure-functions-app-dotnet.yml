@@ -1,0 +1,88 @@
+# This workflow will build a .NET Core project and deploy it to an Azure Functions App on Windows or Linux when a commit is pushed to your default branch.
+#
+# This workflow assumes you have already created the target Azure Functions app.
+# For instructions see https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-csharp?tabs=in-process
+#
+# To configure this workflow:
+# 1. Set up the following secrets in your repository:
+#   - AZURE_FUNCTIONAPP_PUBLISH_PROFILE
+# 2. Change env variables for your configuration.
+#
+# For more information on:
+#   - GitHub Actions for Azure: https://github.com/Azure/Actions
+#   - Azure Functions Action: https://github.com/Azure/functions-action
+#   - Publish Profile: https://github.com/Azure/functions-action#using-publish-profile-as-deployment-credential-recommended
+#   - Azure Service Principal for RBAC: https://github.com/Azure/functions-action#using-azure-service-principal-for-rbac-as-deployment-credential
+#
+# For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples/tree/master/FunctionApp
+
+name: Deploy DotNet project to Azure Function App
+
+on:
+  workflow_run:
+    workflows: [CI Azure Function]
+    types: [completed]
+  workflow_dispatch:
+  
+permissions: read-all
+
+env:
+  AZURE_FUNCTIONAPP_NAME: ''   # set this to your function app name on Azure
+
+jobs:
+  deploy-dev:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: DEV
+   
+    steps:
+    - name : 'Obtaine artifact'
+      uses:   actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+      with:
+        name: app-artifact
+        path: ./publish
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
+      id: deploy-to-function-app
+      with:
+        app-name: ${{ vars.AZURE_FUNCTIONAPP_NAME }}
+        package: ./publish
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }} # Remove publish-profile to use Azure RBAC
+  
+  deploy-qa:
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    environment: QA
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: app-artifact
+          path: ./publish
+
+      - name: Deploy to QA
+        uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
+        with:
+          app-name: ${{ vars.AZURE_FUNCTIONAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          package: ./publish
+
+  deploy-prd:
+    needs: deploy-qa
+    runs-on: ubuntu-latest
+    environment: PRD
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: app-artifact
+          path: ./publish
+
+      - name: Deploy to PRD
+        uses: Azure/functions-action@82e58835532abc5b185ee6f59abd3fb92eb5d4e9
+        with:
+          app-name: ${{ vars.AZURE_FUNCTIONAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          package: ./publish
