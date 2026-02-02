@@ -1,0 +1,54 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI Azure Function
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs: 
+  build:
+    
+    environment: DEV
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+    - uses: actions/checkout@1e31de5234b9f8995739874a8ce0492dc87873e2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@dc30e5defeb4a0047e149c684eab597f5f37f67d
+      with:
+        dotnet-version: '6.0.x'
+   # - name: List csproj
+  #  run: find . -name "*.csproj"
+
+    - name: Restore dependencies
+      run: dotnet restore  
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Publish
+      run: dotnet publish FUNCTION_FEMCO_BDI/FUNCTION_FEMCO_BDI.csproj  --configuration Release --no-build --output ./output
+    #- name: 'Run Azure Functions Action'
+    #  uses: Azure/functions-action@v1
+    #  id: fa
+    #  with:
+     #   app-name: 'FEMCOBDIDEV'
+      #  slot-name: 'Production'
+       # package: './output'
+        #publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE  }}
+    - name: Upload build artifact
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 #v4
+      with:
+        name: functionApp
+        path: ./output
+        include-hidden-files: true
+        if-no-files-found: error
+        retention-days: 7
+          
