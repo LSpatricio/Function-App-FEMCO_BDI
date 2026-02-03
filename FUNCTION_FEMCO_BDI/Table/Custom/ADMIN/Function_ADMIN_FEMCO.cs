@@ -145,7 +145,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.ADMIN_FEMCO
         //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
 
         [Function("BulkCreate_Timer_ADMIN_FEMCO")]
-        public async Task BulkCreate_Timer_ADMIN_FEMCO([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_ADMIN_FEMCO([TimerTrigger("0 20,50 * 1-4 * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_ADMIN_FEMCO.");

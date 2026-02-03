@@ -143,10 +143,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.AUDIT_FEMCO
 
         #region BulkCreate como Azure Function Timer.
 
-        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //Ejecucion día 1 al 4 del mes a las 20 y 50 minutos de cada hora.
 
         [Function("BulkCreate_Timer_AUDIT_FEMCO")]
-        public async Task BulkCreate_Timer_AUDIT_FEMCODailyTask([TimerTrigger("0 30 8,15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_AUDIT_FEMCODailyTask([TimerTrigger("0 20,50 * 1-4 * *")] TimerInfo myTimer)
         {
             //Expresion cron
             //azure
