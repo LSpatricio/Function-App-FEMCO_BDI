@@ -1,0 +1,121 @@
+# This workflow will build a .NET Core project and deploy it to an Azure Functions App on Windows or Linux when a commit is pushed to your default branch.
+#
+# This workflow assumes you have already created the target Azure Functions app.
+# For instructions see https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-csharp?tabs=in-process
+#
+# To configure this workflow:
+# 1. Set up the following secrets in your repository:
+#   - AZURE_FUNCTIONAPP_PUBLISH_PROFILE
+# 2. Change env variables for your configuration.
+#
+# For more information on:
+#   - GitHub Actions for Azure: https://github.com/Azure/Actions
+#   - Azure Functions Action: https://github.com/Azure/functions-action
+#   - Publish Profile: https://github.com/Azure/functions-action#using-publish-profile-as-deployment-credential-recommended
+#   - Azure Service Principal for RBAC: https://github.com/Azure/functions-action#using-azure-service-principal-for-rbac-as-deployment-credential
+#
+# For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples/tree/master/FunctionApp
+
+name: Deploy DotNet project to Azure Function App
+
+on:
+  workflow_run:
+    workflows: [CI Azure Function]
+    types: [completed]
+  workflow_dispatch:
+  
+permissions:
+  contents: read
+  actions: read
+
+env:
+  AZURE_FUNCTIONAPP_NAME: ''   # set this to your function app name on Azure
+
+jobs:
+  deploy-dev:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: DEV
+   
+    steps:
+   # - name: obtain all files
+    #  run: ls -la
+    - name : Obtaine artifact de ${{ github.repository }}
+      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+      with:
+        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
+        repository: ${{ github.repository }}  # Mismo repositorio
+        github-token: ${{ secrets.GITHUB_TOKEN}}
+        path: ./downloaded-artifact
+        name: functionApp
+        
+    #- name: List downloaded files
+    #  run: ls -la 
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@0bd707f87c0b6385742bab336c74e1afc61f6369 #v1
+      id: fa
+      with:
+        app-name: 'FEMCOBDIDEV'
+        package: ./downloaded-artifact
+        slot-name: 'Production' 
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+  
+  deploy-qa:
+    needs: deploy-dev
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: QA
+    
+    steps:
+   # - name: obtain all files
+    #  run: ls -la
+    - name : Obtaine artifact de ${{ github.repository }}
+      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+      with:
+        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
+        repository: ${{ github.repository }}  # Mismo repositorio
+        github-token: ${{ secrets.GITHUB_TOKEN}}
+        path: ./downloaded-artifact
+        name: functionApp
+        
+    #- name: List downloaded files
+    #  run: ls -la 
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@0bd707f87c0b6385742bab336c74e1afc61f6369 #v1
+      id: fa
+      with:
+        app-name: 'FEMCOBDIQA'
+        package: ./downloaded-artifact
+        slot-name: 'Production' 
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+    
+  deploy-prd:
+    needs: deploy-qa
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: PRD
+    
+    steps:
+   # - name: obtain all files
+    #  run: ls -la
+    - name : Obtaine artifact de ${{ github.repository }}
+      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+      with:
+        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
+        repository: ${{ github.repository }}  # Mismo repositorio
+        github-token: ${{ secrets.GITHUB_TOKEN}}
+        path: ./downloaded-artifact
+        name: functionApp
+        
+    #- name: List downloaded files
+    #  run: ls -la 
+    - name: 'Run Azure Functions Action'
+      uses: Azure/functions-action@0bd707f87c0b6385742bab336c74e1afc61f6369 #v1
+      id: fa
+      with:
+        app-name: 'FEMCOBDIPRD'
+        package: ./downloaded-artifact
+        slot-name: 'Production' 
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+  
+    
+
+        
