@@ -42,14 +42,22 @@ jobs:
     steps:
    # - name: obtain all files
     #  run: ls -la
-    - name : Obtaine artifact de ${{ github.repository }}
-      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+    - uses: actions/checkout@1e31de5234b9f8995739874a8ce0492dc87873e2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@dc30e5defeb4a0047e149c684eab597f5f37f67d
       with:
-        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
-        repository: ${{ github.repository }}  # Mismo repositorio
-        github-token: ${{ secrets.GITHUB_TOKEN}}
-        path: ./downloaded-artifact
-        name: functionApp
+        dotnet-version: '6.0.x'
+    - name: Build for deploy
+      run: dotnet build --configuration Release --output ./output
+      
+   # - name : Obtaine artifact de ${{ github.repository }}
+   #   uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+   #  with:
+   #     run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
+   #     repository: ${{ github.repository }}  # Mismo repositorio
+   #     github-token: ${{ secrets.GITHUB_TOKEN}}
+   #     path: ./downloaded-artifact
+   #     name: functionApp
         
     #- name: List downloaded files
     #  run: ls -la 
@@ -58,7 +66,7 @@ jobs:
       id: fa
       with:
         app-name: 'FEMCOBDIDEV'
-        package: ./downloaded-artifact
+        package: ./output
         slot-name: 'Production' 
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
   
@@ -66,27 +74,22 @@ jobs:
     needs: deploy-dev
     runs-on: ubuntu-latest # For Linux, use ubuntu-latest
     environment: QA
-    
+   
     steps:
-   # - name: obtain all files
-    #  run: ls -la
-    - name : Obtaine artifact de ${{ github.repository }}
-      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+    - uses: actions/checkout@1e31de5234b9f8995739874a8ce0492dc87873e2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@dc30e5defeb4a0047e149c684eab597f5f37f67d
       with:
-        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
-        repository: ${{ github.repository }}  # Mismo repositorio
-        github-token: ${{ secrets.GITHUB_TOKEN}}
-        path: ./downloaded-artifact
-        name: functionApp
-        
-    #- name: List downloaded files
-    #  run: ls -la 
+        dotnet-version: '6.0.x'
+    - name: Build for deploy
+      run: dotnet build --configuration Release --output ./output
+ 
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@0bd707f87c0b6385742bab336c74e1afc61f6369 #v1
       id: fa
       with:
         app-name: 'FEMCOBDIQA'
-        package: ./downloaded-artifact
+        package: ./output
         slot-name: 'Production' 
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
     
@@ -94,27 +97,22 @@ jobs:
     needs: deploy-qa
     runs-on: ubuntu-latest # For Linux, use ubuntu-latest
     environment: PRD
-    
+   
     steps:
-   # - name: obtain all files
-    #  run: ls -la
-    - name : Obtaine artifact de ${{ github.repository }}
-      uses:   actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 #V4  
+    - uses: actions/checkout@1e31de5234b9f8995739874a8ce0492dc87873e2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@dc30e5defeb4a0047e149c684eab597f5f37f67d
       with:
-        run-id: ${{ github.event.workflow_run.id }}  # ID del workflow que subió el artifact
-        repository: ${{ github.repository }}  # Mismo repositorio
-        github-token: ${{ secrets.GITHUB_TOKEN}}
-        path: ./downloaded-artifact
-        name: functionApp
-        
-    #- name: List downloaded files
-    #  run: ls -la 
+        dotnet-version: '6.0.x'
+    - name: Build for deploy
+      run: dotnet build --configuration Release --output ./output
+ 
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@0bd707f87c0b6385742bab336c74e1afc61f6369 #v1
       id: fa
       with:
         app-name: 'FEMCOBDIPRD'
-        package: ./downloaded-artifact
+        package: ./output
         slot-name: 'Production' 
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
   
