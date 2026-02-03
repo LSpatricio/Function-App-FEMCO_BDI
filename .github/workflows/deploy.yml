@@ -22,8 +22,8 @@ on:
   #workflow_run:
    # workflows: [CI Azure Function]
     #types: [completed]
-  push:
-    branches: [ "main" ]
+#  push:
+ #   branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
     types: [closed]
