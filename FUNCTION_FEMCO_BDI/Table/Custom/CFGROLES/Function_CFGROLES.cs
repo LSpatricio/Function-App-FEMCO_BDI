@@ -52,7 +52,8 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGROLES
                 "DateStart",
                 "DateEnd"
             };
-            string parametros = $@" WHERE \""DateStart\"" >= '{dateStartFormatted}'";
+            //string parametros = $@" WHERE \""DateStart\"" >= '{dateStartFormatted}'";
+            string parametros = "";
             string mensaje = "";
 
             string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
