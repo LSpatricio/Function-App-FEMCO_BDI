@@ -173,6 +173,27 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
             }
         }
 
+        //Todos los días a las 2 am
+        [Function("BulkCreate_Timer__RESULT287_Thursday_Sunday")]
+        public async Task BulkCreate_Timer__RESULT287_Thursday_Sunday([TimerTrigger("0 30 12 * * 4,7")] TimerInfo myTimer)
+        {
+
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287_Thursday_Sunday.");
+
+            try
+            {
+                string mensaje = await BulkCreate__RESULT287();
+                _logger.LogInformation(mensaje);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT287_Thursday_Sunday: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT287_Thursday_Sunday.");
+            }
+        }
         #endregion
 
         public async Task<HttpResponseData> GetAllRows_RESULT287([HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetAllRows_RESULT287")] HttpRequestData req)
