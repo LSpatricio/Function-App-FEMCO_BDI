@@ -154,9 +154,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
 
         #region BulkCreate como Azure Function Timer.
 
-        //Lunes y Viernes cada hora
+        //todos los dias 2 am 
         [Function("BulkCreate_Timer__RESULT387")]
-        public async Task BulkCreate_Timer__RESULT387([TimerTrigger("0 0 */1 * * 1,5")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer__RESULT387([TimerTrigger("0 0 2 * * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT387.");
@@ -176,6 +176,26 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
             }
         }
 
+        [Function("BulkCreate_Timer__RESULT387_Thursday_Sunday")]
+        public async Task BulkCreate_Timer__RESULT387_Thursday_Sunday([TimerTrigger("0 0 2 * * *")] TimerInfo myTimer)
+        {
+
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT387_Thursday_Sunday.");
+
+            try
+            {
+                string mensaje = await BulkCreate__RESULT387();
+                _logger.LogInformation(mensaje);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT387_Thursday_Sunday: {Message}", ex.Message);
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT387_Thursday_Sunday.");
+            }
+        }
         #endregion
 
 

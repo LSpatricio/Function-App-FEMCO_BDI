@@ -136,7 +136,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CATPOSITION
 
         //Todos los dias 3:00 pm
         [Function("BulkCreate_Timer_CATPOSITION")]
-        public async Task BulkCreate_Timer_CATPOSITION([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CATPOSITION([TimerTrigger("0 0 5 * * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CATPOSITION.");

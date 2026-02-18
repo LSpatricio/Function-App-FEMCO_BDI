@@ -139,7 +139,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGSTOREHIERARCHY
 
         //Todos los dias 3:00 pm
         [Function("BulkCreate_Timer_CFGSTOREHIERARCHY")]
-        public async Task BulkCreate_Timer_CFGSTOREHIERARCHY([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CFGSTOREHIERARCHY([TimerTrigger("0 15 6-23/1 * * 1,5")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGSTOREHIERARCHY.");
