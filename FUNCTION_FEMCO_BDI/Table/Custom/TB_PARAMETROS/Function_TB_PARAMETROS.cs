@@ -67,7 +67,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TB_PARAMETROS
 
             await _dao.TruncateTable(NOMBRE_TABLA);
 
-            for (int i = 0; i < count; i += 500000)
+            for (int i = 0; i < count; i += 400000)
             {
                 DataTable dtParte = await _icmservice.ConsultaICMQuerytool(TablaICM, $"{consultaICM} {orderBy}", modeloICM, i);
                 mensaje = await _dao.bulkInsert(dtParte, NOMBRE_TABLA);
