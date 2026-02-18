@@ -103,7 +103,7 @@ namespace FUNCTION_FEMCO_BDI.DAO
                                     {{
                                         ""queryString"": ""{consulta}"",
                                         ""offset"":{offset},
-                                        ""limit"": 500000
+                                        ""limit"": 400000
                                     }}";
 
             var requestContenido = new HttpRequestMessage(HttpMethod.Post, requestUrlDatos)
