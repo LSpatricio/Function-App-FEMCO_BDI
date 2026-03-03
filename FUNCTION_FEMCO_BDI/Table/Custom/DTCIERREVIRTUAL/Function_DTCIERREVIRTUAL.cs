@@ -33,15 +33,15 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
         #region BulkCreate como método.
         public async Task<string> BulkCreate_DTCIERREVIRTUAL()
         {
-            DataTable dtfechas = FuncionalidadICM.getdates();
+        //    DataTable dtfechas = FuncionalidadICM.getdates();
 
-            DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
+      //      DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
 
-            string dateStartFormatted = dateStart.ToString("yyyy MMM", new CultureInfo("es-MX")).ToUpper();
+     //       string dateStartFormatted = dateStart.ToString("yyyy MMM", new CultureInfo("es-MX")).ToUpper();
 
-            dateStartFormatted = dateStartFormatted.Remove(dateStartFormatted.Length - 1);
+         //   dateStartFormatted = dateStartFormatted.Remove(dateStartFormatted.Length - 1);
 
-            dateStartFormatted = dateStartFormatted.Replace(" ", "%");
+          //  dateStartFormatted = dateStartFormatted.Replace(" ", "%");
 
 
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemco");
@@ -66,7 +66,8 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.DTCIERREVIRTUAL
                 "BloqueadorID",
                 "CanceladorID"
             };
-            string parametros = $@" WHERE \""Periodo\"" ILIKE '{dateStartFormatted}'";
+            //string parametros = $@" WHERE \""Periodo\"" ILIKE '{dateStartFormatted}'";
+            string parametros = " ";
             string mensaje = "";
 
             string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
