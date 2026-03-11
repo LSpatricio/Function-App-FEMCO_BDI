@@ -1,4 +1,5 @@
-﻿using FUNCTION_FEMCO_BDI.Funcionalidades;
+﻿using FUNCTION_FEMCO_BDI.DTOs;
+using FUNCTION_FEMCO_BDI.Funcionalidades;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -116,6 +117,24 @@ namespace FUNCTION_FEMCO_BDI.DAO
             HttpResponseMessage contenidoResponse = await _httpClient.SendAsync(requestContenido, HttpCompletionOption.ResponseHeadersRead);
 
             return contenidoResponse;
+        }
+
+        public async Task<RunScheduleitemResponse> EjecutarScheduleitem(string itemId, string modelo)
+        {
+            string requestUrl = $"{ICMBaseUrl}/rpc/scheduleitem/{itemId}/run";
+            
+            var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+
+            request.Headers.Add("Model", modelo);
+
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            RunScheduleitemResponse runScheduleitemResponse = JsonConvert.DeserializeObject<RunScheduleitemResponse>(jsonResponse);
+
+            return runScheduleitemResponse;
+
         }
 
 

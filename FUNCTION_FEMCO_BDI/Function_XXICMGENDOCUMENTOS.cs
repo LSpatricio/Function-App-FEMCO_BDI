@@ -34,7 +34,10 @@ namespace FUNCTION_FEMCO_BDI
             response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-            
+            RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4638", modeloFemco);   
+
+            string runid = runScheduleitemResponse.GetRunId();
+
             response.WriteString("Welcome to Azure Functions!");
 
             return response;
