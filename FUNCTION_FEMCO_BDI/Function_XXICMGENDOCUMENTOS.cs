@@ -29,7 +29,7 @@ namespace FUNCTION_FEMCO_BDI
         {
             _logger.LogInformation("Inicio de la funcion Function_XXICMGENDOCUMENTOS");
 
-            string modeloFemco = Environment.GetEnvironmentVariable("ModeloFemco");
+            string modeloFemco = Environment.GetEnvironmentVariable("ModelFemco");
 
             var response = req.CreateResponse();
             response.Headers.Add("Content-Type", "application/json; charset=utf-8");
@@ -45,13 +45,24 @@ namespace FUNCTION_FEMCO_BDI
             {
                 throw new Exception("No se pudo obtener el RunId de la importación.");
             }
-            LiveActivitiesResponse liveActivitiesResponse = null;
+            
+            LiveActivitiesResponse liveActivitiesResponse;
+            
             do
             {
                 _logger.LogInformation("Importación con RunId: " + runId + " ejecutandose.");
                 liveActivitiesResponse = await _icmservice.ConsultarLiveActivitie(runId, modeloFemco);
+                if (liveActivitiesResponse == null)
+                {
+                    liveActivitiesResponse = new LiveActivitiesResponse
+                    {
+                        Status = ActivityStatus.SinRespuesta
+                    };
 
-                await Task.Delay(10000); 
+
+                }
+
+                await Task.Delay(5000); 
             }
             while (liveActivitiesResponse.IsRunning);
 

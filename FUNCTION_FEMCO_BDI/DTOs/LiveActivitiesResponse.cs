@@ -18,7 +18,7 @@ namespace FUNCTION_FEMCO_BDI.DTOs
         public string Type { set; get; }
 
         [JsonConverter(typeof(StringEnumConverter))]
-        public ActivityStatus Status { set; get; }
+        public ActivityStatus? Status { set; get; }
 
         public DateTime Time { set; get; }
 
@@ -38,7 +38,7 @@ namespace FUNCTION_FEMCO_BDI.DTOs
 
         public Int32 ComputationId { set; get; }
 
-        public bool IsRunning => Status != ActivityStatus.Running;
+        public bool IsRunning => Status == ActivityStatus.Running;
 
 
     }
@@ -48,7 +48,8 @@ namespace FUNCTION_FEMCO_BDI.DTOs
         Completed,
         Running,
         Failed,
-        Cancelled
+        Cancelled,
+        SinRespuesta
     }
 
 }
