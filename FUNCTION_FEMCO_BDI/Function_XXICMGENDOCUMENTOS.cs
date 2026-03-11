@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace FUNCTION_FEMCO_BDI
 {
@@ -36,7 +37,12 @@ namespace FUNCTION_FEMCO_BDI
 
             RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4638", modeloFemco);   
 
-            string runid = runScheduleitemResponse.GetRunId();
+            string runId = runScheduleitemResponse.GetRunId();
+
+            if (string.IsNullOrEmpty(runId))
+            {
+                throw new Exception("No se pudo obtener el RunId de la importación.");
+            }
 
             response.WriteString("Welcome to Azure Functions!");
 

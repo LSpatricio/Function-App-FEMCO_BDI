@@ -8,6 +8,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,10 +129,34 @@ namespace FUNCTION_FEMCO_BDI.DAO
             request.Headers.Add("Model", modelo);
 
             HttpResponseMessage response = await _httpClient.SendAsync(request);
+            
+            if (!response.IsSuccessStatusCode) {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.ServiceUnavailable: // 503
+                        throw new HttpRequestException(
+                            "No se puede ejecutar la importación. La tabla está bloqueada por otro proceso.");
+
+                    case HttpStatusCode.Conflict: // 409
+                        throw new HttpRequestException(
+                            "No se puede ejecutar la importación. Hay otros procesos en ejecución.");
+
+                    default:
+                        throw new HttpRequestException(
+                            $"Error al ejecutar schedule item: {response.StatusCode}");
+                }
+
+
+            }
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
 
             RunScheduleitemResponse runScheduleitemResponse = JsonConvert.DeserializeObject<RunScheduleitemResponse>(jsonResponse);
+
+            if (runScheduleitemResponse == null)
+            {
+                throw new InvalidOperationException("La respuesta del servicio ICM no se pudo deserializar correctamente.");
+            }
 
             return runScheduleitemResponse;
 

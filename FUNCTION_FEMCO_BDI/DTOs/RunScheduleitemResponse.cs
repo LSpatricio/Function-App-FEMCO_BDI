@@ -11,12 +11,14 @@ namespace FUNCTION_FEMCO_BDI.DTOs
         public string CompletedActivities { get; set; }
         public string LiveActivities { get; set; }
 
-     //   public string GetRunId()
-       // {
-         //   return CompletedActivities?.Split('/').LastOrDefault();
+        //   public string GetRunId()
+        // {
+        //   return CompletedActivities?.Split('/').LastOrDefault();
         //}
 
-        public string GetRunId() => CompletedActivities?.Split('/').LastOrDefault();
-
+        public string GetRunId() =>
+            string.IsNullOrWhiteSpace(CompletedActivities)
+                ? null
+                : CompletedActivities.Split('/').LastOrDefault();
     }
 }
