@@ -162,6 +162,32 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
         }
 
+        public async Task<LiveActivitiesResponse> ConsultarLiveActivitie(string runId, string modelo)
+        {
+            string requestUrl = $"{ICMBaseUrl}/liveactivities?filter=progressId={runId}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
+            request.Headers.Add("Model", modelo);
+
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Error al consultar live activities: {response.StatusCode}");
+            }
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            List<LiveActivitiesResponse> liveActiviesResponseArray = JsonConvert.DeserializeObject<List<LiveActivitiesResponse>>(jsonResponse);
+
+            LiveActivitiesResponse liveActiviesResponse = liveActiviesResponseArray.FirstOrDefault();
+
+            return liveActiviesResponse;
+
+
+        }
+
 
     }
 }

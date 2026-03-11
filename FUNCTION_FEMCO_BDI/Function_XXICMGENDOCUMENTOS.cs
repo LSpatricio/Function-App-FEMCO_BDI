@@ -35,7 +35,9 @@ namespace FUNCTION_FEMCO_BDI
             response.Headers.Add("Content-Type", "application/json; charset=utf-8");
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-            RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4638", modeloFemco);   
+            _logger.LogInformation("Ejecutando scheduler");
+
+            RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4636", modeloFemco);   
 
             string runId = runScheduleitemResponse.GetRunId();
 
@@ -43,6 +45,18 @@ namespace FUNCTION_FEMCO_BDI
             {
                 throw new Exception("No se pudo obtener el RunId de la importación.");
             }
+            LiveActivitiesResponse liveActivitiesResponse = null;
+            do
+            {
+                _logger.LogInformation("Importación con RunId: " + runId + " ejecutandose.");
+                liveActivitiesResponse = await _icmservice.ConsultarLiveActivitie(runId, modeloFemco);
+
+                await Task.Delay(10000); 
+            }
+            while (liveActivitiesResponse.IsRunning);
+
+
+
 
             response.WriteString("Welcome to Azure Functions!");
 
