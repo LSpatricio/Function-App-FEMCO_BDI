@@ -122,15 +122,19 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
         public async Task<RunScheduleitemResponse> EjecutarScheduleitem(string itemId, string modelo)
         {
-            string requestUrl = $"{ICMBaseUrl}/rpc/scheduleitem/{itemId}/run";
+            try 
+            { 
             
+            string requestUrl = $"{ICMBaseUrl}/rpc/scheduleitem/{itemId}/run";
+
             var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
 
             request.Headers.Add("Model", modelo);
 
             HttpResponseMessage response = await _httpClient.SendAsync(request);
-            
-            if (!response.IsSuccessStatusCode) {
+
+            if (!response.IsSuccessStatusCode)
+            {
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.ServiceUnavailable: // 503
@@ -159,57 +163,89 @@ namespace FUNCTION_FEMCO_BDI.DAO
             }
 
             return runScheduleitemResponse;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
+
+                throw new InvalidOperationException(
+                    "Error inesperado al consultar ICM.", ex);
+            }
+       
 
         }
 
         public async Task<LiveActivitiesResponse> ConsultarLiveActivitie(string runId, string modelo)
         {
-            string requestUrl = $"{ICMBaseUrl}/liveactivities?filter=progressId={runId}";
 
-            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-
-            request.Headers.Add("Model", modelo);
-
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new HttpRequestException($"Error al consultar live activities: {response.StatusCode}");
+                string requestUrl = $"{ICMBaseUrl}/liveactivities?filter=progressId={runId}";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
+                request.Headers.Add("Model", modelo);
+
+                HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Error al consultar live activities: {response.StatusCode}");
+                }
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                List<LiveActivitiesResponse> liveActiviesResponseArray = JsonConvert.DeserializeObject<List<LiveActivitiesResponse>>(jsonResponse);
+
+                LiveActivitiesResponse liveActiviesResponse = liveActiviesResponseArray.FirstOrDefault();
+
+                return liveActiviesResponse;
+
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-
-            List<LiveActivitiesResponse> liveActiviesResponseArray = JsonConvert.DeserializeObject<List<LiveActivitiesResponse>>(jsonResponse);
-
-            LiveActivitiesResponse liveActiviesResponse = liveActiviesResponseArray.FirstOrDefault();
-
-            return liveActiviesResponse;
-
+                throw new InvalidOperationException(
+                    "Error inesperado al consultar ICM.", ex);
+            }
+            
 
         }
 
         public async Task<CompletedActivitiesResponse> ConsultarCompletedActivitie(string runId, string modelo)
         {
-            string requestUrl = $"{ICMBaseUrl}/completedactivities?filter=progressId={runId}";
-
-            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-
-            request.Headers.Add("Model", modelo);
-
-            HttpResponseMessage response = await _httpClient.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new HttpRequestException($"Error al consultar completedactivities activities: {response.StatusCode}");
+                string requestUrl = $"{ICMBaseUrl}/completedactivities?filter=progressId={runId}";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
+                request.Headers.Add("Model", modelo);
+
+                HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Error al consultar completedactivities activities: {response.StatusCode}");
+                }
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                List<CompletedActivitiesResponse> completedActiviesResponseArray = JsonConvert.DeserializeObject<List<CompletedActivitiesResponse>>(jsonResponse);
+
+                CompletedActivitiesResponse completedActiviesResponse = completedActiviesResponseArray.FirstOrDefault();
+
+                return completedActiviesResponse;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
 
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-
-            List<CompletedActivitiesResponse> completedActiviesResponseArray = JsonConvert.DeserializeObject<List<CompletedActivitiesResponse>>(jsonResponse);
-
-            CompletedActivitiesResponse completedActiviesResponse = completedActiviesResponseArray.FirstOrDefault();
-
-            return completedActiviesResponse;
+                throw new InvalidOperationException(
+                    "Error inesperado al consultar ICM.", ex);
+            }
+            
 
 
         }
