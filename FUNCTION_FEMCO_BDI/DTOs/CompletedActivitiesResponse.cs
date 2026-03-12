@@ -25,6 +25,9 @@ namespace FUNCTION_FEMCO_BDI.DTOs
         public DateTime Time { set; get; }
 
         public string ApiServer { set; get; }
+
+        public bool IsCompleted => Status == CompletedActivityStatus.Completed;
+
     }
 
     public enum CompletedActivityStatus

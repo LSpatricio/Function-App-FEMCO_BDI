@@ -93,11 +93,10 @@ namespace FUNCTION_FEMCO_BDI
 
                 string mensaje = "";
 
-                if (completedActiviesResponse.Status == CompletedActivityStatus.Completed)
+                if (completedActiviesResponse.IsCompleted)
                 {
                     mensaje = "Proceso de generación de documentos completado exitosamente.";
-                    response.StatusCode = HttpStatusCode.Accepted; // 202 Accepted
-
+                    response.StatusCode = HttpStatusCode.Accepted;
                 }
                 else
                 {
