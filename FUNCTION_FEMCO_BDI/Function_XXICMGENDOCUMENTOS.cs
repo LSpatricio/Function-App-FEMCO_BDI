@@ -36,14 +36,22 @@ namespace FUNCTION_FEMCO_BDI
 
                 _logger.LogInformation("Inicio de la funcion Function_XXICMGENDOCUMENTOS");
 
+                var request = await req.ReadFromJsonAsync<ImportResquest>();
+
+                if (request == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    await response.WriteStringAsync("El body de la solicitud es inválido.");
+                    return response;
+                }
+
                 string modeloFemco = Environment.GetEnvironmentVariable("ModelFemco");
 
                 response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
                 _logger.LogInformation("Ejecutando scheduler");
 
-                RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4636", modeloFemco);
+                RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem(request.scheduleItemId, modeloFemco);
 
                 string runId = runScheduleitemResponse.GetRunId();
 
