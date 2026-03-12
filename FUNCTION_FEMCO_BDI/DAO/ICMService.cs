@@ -188,6 +188,32 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
         }
 
+        public async Task<CompletedActivitiesResponse> ConsultarCompletedActivitie(string runId, string modelo)
+        {
+            string requestUrl = $"{ICMBaseUrl}/completedactivities?filter=progressId={runId}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
+            request.Headers.Add("Model", modelo);
+
+            HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpRequestException($"Error al consultar completedactivities activities: {response.StatusCode}");
+            }
+
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            List<CompletedActivitiesResponse> completedActiviesResponseArray = JsonConvert.DeserializeObject<List<CompletedActivitiesResponse>>(jsonResponse);
+
+            CompletedActivitiesResponse completedActiviesResponse = completedActiviesResponseArray.FirstOrDefault();
+
+            return completedActiviesResponse;
+
+
+        }
+
 
     }
 }

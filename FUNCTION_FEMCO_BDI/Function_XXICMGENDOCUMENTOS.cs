@@ -1,3 +1,4 @@
+using Azure;
 using FUNCTION_FEMCO_BDI.DAO;
 using FUNCTION_FEMCO_BDI.DTOs;
 using Microsoft.Azure.Functions.Worker;
@@ -11,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace FUNCTION_FEMCO_BDI
 {
@@ -27,49 +29,113 @@ namespace FUNCTION_FEMCO_BDI
         [Function("Function_XXICMGENDOCUMENTOS")]
         public async Task<HttpResponseData> EjecutarProcesoGenDocumentos([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
         {
-            _logger.LogInformation("Inicio de la funcion Function_XXICMGENDOCUMENTOS");
-
-            string modeloFemco = Environment.GetEnvironmentVariable("ModelFemco");
-
             var response = req.CreateResponse();
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-            _logger.LogInformation("Ejecutando scheduler");
-
-            RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4636", modeloFemco);   
-
-            string runId = runScheduleitemResponse.GetRunId();
-
-            if (string.IsNullOrEmpty(runId))
+            try
             {
-                throw new Exception("No se pudo obtener el RunId de la importación.");
-            }
-            
-            LiveActivitiesResponse liveActivitiesResponse;
-            
-            do
-            {
-                _logger.LogInformation("Importación con RunId: " + runId + " ejecutandose.");
-                liveActivitiesResponse = await _icmservice.ConsultarLiveActivitie(runId, modeloFemco);
-                if (liveActivitiesResponse == null)
+
+                _logger.LogInformation("Inicio de la funcion Function_XXICMGENDOCUMENTOS");
+
+                string modeloFemco = Environment.GetEnvironmentVariable("ModelFemco");
+
+                response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
+                _logger.LogInformation("Ejecutando scheduler");
+
+                RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarScheduleitem("4636", modeloFemco);
+
+                string runId = runScheduleitemResponse.GetRunId();
+
+                if (string.IsNullOrEmpty(runId))
                 {
-                    liveActivitiesResponse = new LiveActivitiesResponse
+                    throw new Exception("No se pudo obtener el RunId de la importación.");
+                }
+
+                LiveActivitiesResponse liveActivitiesResponse;
+
+                do
+                {
+                    _logger.LogInformation("Importación con RunId: " + runId + " ejecutandose.");
+                    liveActivitiesResponse = await _icmservice.ConsultarLiveActivitie(runId, modeloFemco);
+                    if (liveActivitiesResponse == null)
                     {
-                        Status = ActivityStatus.SinRespuesta
+                        liveActivitiesResponse = new LiveActivitiesResponse
+                        {
+                            Status = ActivityStatus.SinRespuesta
+                        };
+
+
+                    }
+
+                    await Task.Delay(5000);
+                }
+                while (liveActivitiesResponse.IsRunning);
+
+
+                CompletedActivitiesResponse completedActiviesResponse = await _icmservice.ConsultarCompletedActivitie(runId, modeloFemco); ;
+
+                if (completedActiviesResponse == null)
+                {
+                    completedActiviesResponse = new CompletedActivitiesResponse
+                    {
+                        Status = CompletedActivityStatus.Completed
                     };
+                }
+
+                string mensaje = "";
+
+                if (completedActiviesResponse.Status == CompletedActivityStatus.Completed)
+                {
+                    mensaje = "Proceso de generación de documentos completado exitosamente.";
+                    response.StatusCode = HttpStatusCode.Accepted; // 202 Accepted
+
+                }
+                else
+                {
+
+                    mensaje = $"Proceso de generación de documentos finalizado con estado: {completedActiviesResponse.Status}.";
+
+                    if (completedActiviesResponse.Status == CompletedActivityStatus.Cancelled)
+                    {
+                        response.StatusCode = HttpStatusCode.Gone;
+
+                    }
+                    else
+                    {
+                        response.StatusCode = HttpStatusCode.InternalServerError;
+                    }
 
 
                 }
+                var result = new
+                {
+                    message = mensaje,
+                    timestamp = DateTime.UtcNow
+                };
 
-                await Task.Delay(5000); 
+
+                await response.WriteStringAsync(JsonConvert.SerializeObject(result));
+                _logger.LogInformation(mensaje);
             }
-            while (liveActivitiesResponse.IsRunning);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
 
+                await response.WriteAsJsonAsync(new
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    errorCode = "INTERNAL_ERROR",
+                    message = "Ocurrió un error interno. Inténtalo más tarde.",
+                });
+                response.StatusCode = HttpStatusCode.InternalServerError;
 
+            }
+            finally
+            {
+                _logger.LogInformation("Fin de la función BulkCreate_Trigger_AUDIT_FEMCO");
 
-
-            response.WriteString("Welcome to Azure Functions!");
+            }
 
             return response;
         }
