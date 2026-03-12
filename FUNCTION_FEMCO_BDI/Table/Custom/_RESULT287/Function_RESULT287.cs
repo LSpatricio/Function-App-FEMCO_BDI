@@ -37,7 +37,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
         #region BulkCreate como método.
         public async Task<string> BulkCreate__RESULT287()
         {
-            DataTable dtfechas = FuncionalidadICM.getdates();
+            DataTable dtfechas = FuncionalidadICM.getdates(3);
            // DataTable dtfechas = FuncionalidadICM.getdates(18);
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
