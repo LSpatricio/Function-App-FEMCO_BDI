@@ -41,10 +41,13 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
            // DataTable dtfechas = FuncionalidadICM.getdates(18);
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
+            DateTime dateEnd = (DateTime)dtfechas.Rows[0]["DateEnd"];
 
+            DateTime lastDayOfMonth = new DateTime(dateEnd.Year, dateEnd.Month, DateTime.DaysInMonth(dateEnd.Year, dateEnd.Month));
             // Formato MM/dd/yyyystring
-            string dateStartFormatted = dateStart.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-
+            string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            string dateEndFormatted = lastDayOfMonth.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result287";
             List<string> columnas = new List<string>
@@ -57,7 +60,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
                 "Weeks",
                 "Conteo"
             };
-            string parametros = $@" WHERE \""DateString\"" >= '{dateStartFormatted}'"; ;
+            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" BETWEEN '{dateStartFormatted}' AND '{dateEndFormatted}'";
             string mensaje = "";
 
             string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
@@ -151,9 +154,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
 
         #region BulkCreate como Azure Function Timer.
 
-        //Todos los días a las 2 am
+        //juves-sabado 10:30 am
         [Function("BulkCreate_Timer__RESULT287")]
-        public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 0 2 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer__RESULT287([TimerTrigger("0 30 10 * * 4,6")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287.");
@@ -173,76 +176,52 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
             }
         }
 
-        //Todos los días a las 2 am
-        [Function("BulkCreate_Timer__RESULT287_Thursday_Sunday")]
-        public async Task BulkCreate_Timer__RESULT287_Thursday_Sunday([TimerTrigger("0 30 12 * * 3,6")] TimerInfo myTimer)
-        {
-
-            _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT287_Thursday_Sunday.");
-
-            try
-            {
-                string mensaje = await BulkCreate__RESULT287();
-                _logger.LogInformation(mensaje);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT287_Thursday_Sunday: {Message}", ex.Message);
-            }
-            finally
-            {
-                _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT287_Thursday_Sunday.");
-            }
-        }
         #endregion
 
-        public async Task<HttpResponseData> GetAllRows_RESULT287([HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetAllRows_RESULT287")] HttpRequestData req)
-        {
-            _logger.LogInformation("Inicio de la función GetAllRows_RESULT287");
+        //public async Task<HttpResponseData> GetAllRows_RESULT287([HttpTrigger(AuthorizationLevel.Function, "get", Route = "GetAllRows_RESULT287")] HttpRequestData req)
+        //{
+        //    _logger.LogInformation("Inicio de la función GetAllRows_RESULT287");
 
-            var response = req.CreateResponse();
-            response.Headers.Add("Content-Type", "application/json; charset=utf-8");
+        //    var response = req.CreateResponse();
+        //    response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
 
-            try
-            {
-                List<CL_RESULT287> lista = await _dao.getAllRows<CL_RESULT287>(NOMBRE_TABLA);
+        //    try
+        //    {
+        //        List<CL_RESULT287> lista = await _dao.getAllRows<CL_RESULT287>(NOMBRE_TABLA);
 
-                if (lista.Count > 0)
-                {
-                    string jsonResult = JsonConvert.SerializeObject(lista);
-                    response.StatusCode = HttpStatusCode.OK;
-                    await response.WriteStringAsync(jsonResult);
-                }
-                else
-                {
-                    response.StatusCode = HttpStatusCode.NoContent;
-                }
+        //        if (lista.Count > 0)
+        //        {
+        //            string jsonResult = JsonConvert.SerializeObject(lista);
+        //            response.StatusCode = HttpStatusCode.OK;
+        //            await response.WriteStringAsync(jsonResult);
+        //        }
+        //        else
+        //        {
+        //            response.StatusCode = HttpStatusCode.NoContent;
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
-                response.StatusCode = HttpStatusCode.InternalServerError;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Ocurrió un error al procesar la solicitud: {Message}", ex.Message);
+        //        response.StatusCode = HttpStatusCode.InternalServerError;
                 
-                await response.WriteAsJsonAsync(new
-                {
-                    errorCode = "INTERNAL_ERROR",
-                    message = "Ocurrió un error interno. Inténtalo más tarde.",
-                });
-            }
-            finally
-            {
-                _logger.LogInformation("Fin de la función GetAllRows__RESULT287");
+        //        await response.WriteAsJsonAsync(new
+        //        {
+        //            errorCode = "INTERNAL_ERROR",
+        //            message = "Ocurrió un error interno. Inténtalo más tarde.",
+        //        });
+        //    }
+        //    finally
+        //    {
+        //        _logger.LogInformation("Fin de la función GetAllRows__RESULT287");
 
-            }
+        //    }
 
 
-            return response;
+        //    return response;
 
 
         }
-
-
-    }
 }

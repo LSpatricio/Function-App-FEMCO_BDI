@@ -40,9 +40,12 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
 
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
+            DateTime dateEnd= (DateTime)dtfechas.Rows[0]["DateEnd"];
 
+            DateTime lastDayOfMonth = new DateTime(dateEnd.Year, dateEnd.Month, DateTime.DaysInMonth(dateEnd.Year, dateEnd.Month));
             // Formato MM/dd/yyyystring
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            string dateEndFormatted = lastDayOfMonth.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result387";
@@ -59,7 +62,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
                 "Weeks",
                 "Value"
             };
-            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" >= '{dateStartFormatted}'";
+            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" BETWEEN '{dateStartFormatted}' AND '{dateEndFormatted}'";
             //string orderBy = @" ORDER BY  \""IDStore\"", \""PayeeID_\"", \""IDRole\"", \""DateString\"", \""Weeks\"" ";
             string mensaje = "";
 
@@ -154,9 +157,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
 
         #region BulkCreate como Azure Function Timer.
 
-        //todos los dias 2 am 
+        //Jueves-Sabado 10:30 am
         [Function("BulkCreate_Timer__RESULT387")]
-        public async Task BulkCreate_Timer__RESULT387([TimerTrigger("0 0 2 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer__RESULT387([TimerTrigger("0 30 10 * * 4,6")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT387.");
@@ -176,30 +179,8 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
             }
         }
 
-        [Function("BulkCreate_Timer__RESULT387_Thursday_Sunday")]
-        public async Task BulkCreate_Timer__RESULT387_Thursday_Sunday([TimerTrigger("0 30 12 * * 3,6")] TimerInfo myTimer)
-        {
-
-            _logger.LogInformation("Inicio de la función BulkCreate_Timer__RESULT387_Thursday_Sunday.");
-
-            try
-            {
-                string mensaje = await BulkCreate__RESULT387();
-                _logger.LogInformation(mensaje);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer__RESULT387_Thursday_Sunday: {Message}", ex.Message);
-            }
-            finally
-            {
-                _logger.LogInformation("Fin de la función BulkCreate_Timer__RESULT387_Thursday_Sunday.");
-            }
-        }
+     
         #endregion
-
-
-
 
     }
 }
