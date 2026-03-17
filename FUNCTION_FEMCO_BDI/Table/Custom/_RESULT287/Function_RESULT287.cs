@@ -41,10 +41,13 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
            // DataTable dtfechas = FuncionalidadICM.getdates(18);
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
+            DateTime dateEnd = (DateTime)dtfechas.Rows[0]["DateEnd"];
 
+            DateTime lastDayOfMonth = new DateTime(dateEnd.Year, dateEnd.Month, DateTime.DaysInMonth(dateEnd.Year, dateEnd.Month));
             // Formato MM/dd/yyyystring
-            string dateStartFormatted = dateStart.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-
+            string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            string dateEndFormatted = lastDayOfMonth.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result287";
             List<string> columnas = new List<string>
@@ -57,7 +60,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
                 "Weeks",
                 "Conteo"
             };
-            string parametros = $@" WHERE \""DateString\"" >= '{dateStartFormatted}'"; ;
+            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" BETWEEN '{dateStartFormatted}' AND '{dateEndFormatted}'";
             string mensaje = "";
 
             string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);

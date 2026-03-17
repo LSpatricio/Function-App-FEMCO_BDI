@@ -42,15 +42,18 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT293
 
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
+            DateTime dateEnd = (DateTime)dtfechas.Rows[0]["DateEnd"];
 
+            DateTime lastDayOfMonth = new DateTime(dateEnd.Year, dateEnd.Month, DateTime.DaysInMonth(dateEnd.Year, dateEnd.Month));
             // Formato MM/dd/yyyystring
             string dateStartFormatted = dateStart.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+            string dateEndFormatted = lastDayOfMonth.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
 
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result293";
             
 
-            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" >= '{dateStartFormatted}'";
+            string parametros = $@" A INNER JOIN \""CfgDateStringPeriod\"" B ON A.\""Weeks\"" =  B.\""PeriodName\"" WHERE \""DateStart\"" BETWEEN '{dateStartFormatted}' AND '{dateEndFormatted}'";
             List<string> columnas = new List<string>
             {
                 "_ResultID",
