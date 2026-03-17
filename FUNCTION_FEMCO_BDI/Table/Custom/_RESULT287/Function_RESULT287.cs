@@ -224,7 +224,4 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT287
 
 
         }
-
-
-    }
 }

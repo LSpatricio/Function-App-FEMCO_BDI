@@ -182,8 +182,5 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
      
         #endregion
 
-
-
-
     }
 }
