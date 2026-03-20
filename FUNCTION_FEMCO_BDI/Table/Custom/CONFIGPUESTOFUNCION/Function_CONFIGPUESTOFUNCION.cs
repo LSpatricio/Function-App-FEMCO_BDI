@@ -20,7 +20,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CONFIGPUESTOFUNCION
         private readonly ILogger _logger;
         private readonly DAO_SQL _dao;
         private readonly ICMService _icmservice;
-        private const string NOMBRE_TABLA = "dbo.CONFIGPUESTOFUNCION";
+        private const string NOMBRE_TABLA = "FEMCOVS.CONFIGPUESTOFUNCION";
 
         public Function_CONFIGPUESTOFUNCION(ILoggerFactory loggerFactory, DAO_SQL dao, ICMService icmService)
         {
