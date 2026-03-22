@@ -1,18 +1,23 @@
-﻿using FUNCTION_FEMCO_BDI.DAO;
+﻿using Azure;
+using FUNCTION_FEMCO_BDI.DAO;
+using FUNCTION_FEMCO_BDI.DTOs;
+using FUNCTION_FEMCO_BDI.Funcionalidades;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.IO;
-using System.Net;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Azure.Functions.Worker;
-using FUNCTION_FEMCO_BDI.Funcionalidades;
-using System.Globalization;
+using System.Windows.Forms;
+using static Google.Apis.Requests.BatchRequest;
 
 
 namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
@@ -35,10 +40,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
         #region BulkCreate como método.
         public async Task<string> BulkCreate__RESULT387()
         {
+
+
             DataTable dtfechas = FuncionalidadICM.getdates(3);
-           // DataTable dtfechas = FuncionalidadICM.getdates(50);
-
-
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
             DateTime dateEnd= (DateTime)dtfechas.Rows[0]["DateEnd"];
 
@@ -50,6 +54,64 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom._RESULT387
             string modeloICM = Environment.GetEnvironmentVariable("ModelFemcoEP");
             string TablaICM = "_Result387";
 
+            RunScheduleitemResponse runScheduleitemResponse = await _icmservice.EjecutarSincronizacion("387", modeloICM);
+            string runId = runScheduleitemResponse.GetRunId();
+
+            if (string.IsNullOrEmpty(runId))
+            {
+                throw new Exception("No se pudo obtener el RunId de la importación.");
+            }
+
+            LiveActivitiesResponse liveActivitiesResponse;
+
+            do
+            {
+                _logger.LogInformation("Proceso con RunId: " + runId + " ejecutandose.");
+                liveActivitiesResponse = await _icmservice.ConsultarLiveActivitie(runId, modeloICM);
+                if (liveActivitiesResponse == null)
+                {
+                    liveActivitiesResponse = new LiveActivitiesResponse
+                    {
+                        Status = ActivityStatus.SinRespuesta
+                    };
+
+
+                }
+
+                await Task.Delay(5000);
+            }
+            while (liveActivitiesResponse.IsRunning);
+
+
+            CompletedActivitiesResponse completedActiviesResponse = await _icmservice.ConsultarCompletedActivitie(runId, modeloICM); 
+
+            if (completedActiviesResponse == null)
+            {
+                completedActiviesResponse = new CompletedActivitiesResponse
+                {
+                    Status = CompletedActivityStatus.Completed
+                };
+            }
+            if (completedActiviesResponse.IsCompleted)
+            {
+                _logger.LogInformation($"{completedActiviesResponse.Status}");
+            }
+            else
+            {
+
+                if (completedActiviesResponse.Status == CompletedActivityStatus.Cancelled)
+                {
+                    throw new HttpRequestException($"Sincronizacion cancelada");
+                }
+                else
+                {
+                    throw new HttpRequestException($"Error en sincronizacion");
+                }
+            }
+                
+
+
+           
             List<string> columnas = new List<string>
             {
                 "_ResultID",
