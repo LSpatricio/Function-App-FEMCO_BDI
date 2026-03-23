@@ -81,7 +81,7 @@ namespace FUNCTION_FEMCO_BDI
                 while (liveActivitiesResponse.IsRunning);
 
 
-                CompletedActivitiesResponse completedActiviesResponse = await _icmservice.ConsultarCompletedActivitie(runId, modeloFemco); ;
+                CompletedActivitiesResponse completedActiviesResponse = await _icmservice.ConsultarCompletedActivitie(runId, modeloFemco);
 
                 if (completedActiviesResponse == null)
                 {
