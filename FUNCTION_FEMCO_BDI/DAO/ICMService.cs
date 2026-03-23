@@ -153,6 +153,8 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
             }
 
+
+
             var jsonResponse = await response.Content.ReadAsStringAsync();
 
             RunScheduleitemResponse runScheduleitemResponse = JsonConvert.DeserializeObject<RunScheduleitemResponse>(jsonResponse);
@@ -175,6 +177,63 @@ namespace FUNCTION_FEMCO_BDI.DAO
 
         }
 
+
+        public async Task<RunScheduleitemResponse> EjecutarSincronizacion(string resultId, string modelo)
+        {
+            try
+            {
+
+                string requestUrl = $"{ICMBaseUrl}/calculations/async/{resultId}/data?allowSync=true&partialSyncBack=true";
+
+                var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+
+                request.Headers.Add("Model", modelo);
+
+                HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    switch (response.StatusCode)
+                    {
+                        case HttpStatusCode.ServiceUnavailable: // 503
+                            throw new HttpRequestException(
+                                "No se puede ejecutar la sincronizacion.");
+
+                        case HttpStatusCode.Conflict: // 409
+                            throw new HttpRequestException(
+                                "No se puede ejecutar la sincronizacion, acción global en proceso");
+
+                        default:
+                            throw new HttpRequestException(
+                                $"Error al ejecutar sincronización: {response.StatusCode}");
+                    }
+
+
+                }
+
+
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+
+                RunScheduleitemResponse runScheduleitemResponse = JsonConvert.DeserializeObject<RunScheduleitemResponse>(jsonResponse);
+
+                if (runScheduleitemResponse == null)
+                {
+                    throw new InvalidOperationException("La respuesta del servicio ICM no se pudo deserializar correctamente.");
+                }
+
+                return runScheduleitemResponse;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
+
+                throw new InvalidOperationException(
+                    "Error inesperado al consultar ICM.", ex);
+            }
+
+
+        }
         public async Task<LiveActivitiesResponse> ConsultarLiveActivitie(string runId, string modelo)
         {
 
