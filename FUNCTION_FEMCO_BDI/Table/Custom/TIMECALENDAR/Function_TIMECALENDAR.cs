@@ -135,10 +135,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIMECALENDAR
 
         #region BulkCreate como Azure Function Timer.
 
-        //1 vez al día, del 1 al 7 del mes, 5 pm
+        //1 vez al día, todos los días, 8 am
 
         [Function("BulkCreate_Timer_TIMECALENDAR")]
-        public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 0 17 1-7 * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_TIMECALENDAR([TimerTrigger("0 0 8 * * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_TIMECALENDAR.");
