@@ -139,10 +139,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.SCHEDULEITEM
 
         #region BulkCreate como Azure Function Timer.
 
-        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //Diario dos ejecuciones. A las 7:30 am y 3:30 pm
 
         [Function("BulkCreate_Timer_SCHEDULEITEM")]
-        public async Task BulkCreate_Timer_SCHEDULEITEM([TimerTrigger("0 30 8,15 * * 1-5")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_SCHEDULEITEM([TimerTrigger("0 30 7,15 * * 1-5")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_SCHEDULEITEM.");
