@@ -163,9 +163,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
 
         #region BulkCreate como Azure Function Timer 
 
-        //Todos los dias 4:30am
+        //Todos los dias 8:00 am
         [Function("BulkCreate_Timer_HISTORYPAYEE_DailyTask")]
-        public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 30 4 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_HISTORYPAYEE_DailyTask([TimerTrigger("0 0 8 * * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_DailyTask.");
@@ -190,13 +190,12 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
         }
 
 
-        //Lunes y Viernes 7:30am hasta las 11:30 pm, cada hora. 
-        [Function("BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask")]
-        public async Task BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask([TimerTrigger("0 30 7-23 * * 1,5")] TimerInfo myTimer)
+        //Sabado y Domingo 3:00 pm. 
+        [Function("BulkCreate_Timer_HISTORYPAYEE_WeekendTask")]
+        public async Task BulkCreate_Timer_HISTORYPAYEE_WeekendTask([TimerTrigger("0 0 15 * * 6,0")] TimerInfo myTimer)
         {
 
-            _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask.");
-
+            _logger.LogInformation("Inicio de la función BulkCreate_Timer_HISTORYPAYEE_WeekendTask.");
 
             try
             {
@@ -207,7 +206,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYPAYEE
             catch (Exception ex)
             {
 
-                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_MondayFridayTask: {Message}", ex.Message);
+                _logger.LogError(ex, "Error al ejecutar la función BulkCreate_Timer_HISTORYPAYEE_WeekendTask: {Message}", ex.Message);
 
 
             }

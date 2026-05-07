@@ -144,7 +144,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CONFIGDATESTRINGWEEKS
 
         //Todos los dias 2:00 am
         [Function("BulkCreate_Timer_CONFIGDATESTRINGWEEKS")]
-        public async Task BulkCreate_Timer_CONFIGDATESTRINGWEEKS([TimerTrigger("0 0 2 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CONFIGDATESTRINGWEEKS([TimerTrigger("0 0 2 4-6 * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CONFIGDATESTRINGWEEKS.");
