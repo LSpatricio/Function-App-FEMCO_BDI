@@ -136,9 +136,9 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.CFGDATES
 
         #region BulkCreate como Azure Function Timer.
 
-        //Todos los dias 3:00 pm
+        //Todos los dias 2:00 am
         [Function("BulkCreate_Timer_CFGDATES")]
-        public async Task BulkCreate_Timer_CFGDATES([TimerTrigger("0 0 15 * * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_CFGDATES([TimerTrigger("0 0 2 4-6 * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_CFGDATES.");
