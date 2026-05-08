@@ -142,10 +142,10 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.ADMIN_FEMCO
 
         #region BulkCreate como Azure Function Timer.
 
-        //Diario dos ejecuciones. A las 8:30 am y 3:30 pm
+        //1 al 4 de cada mes al minuto 30 cada hora
 
         [Function("BulkCreate_Timer_ADMIN_FEMCO")]
-        public async Task BulkCreate_Timer_ADMIN_FEMCO([TimerTrigger("0 20,50 * 1-4 * *")] TimerInfo myTimer)
+        public async Task BulkCreate_Timer_ADMIN_FEMCO([TimerTrigger("0 30 * 1-4 * *")] TimerInfo myTimer)
         {
 
             _logger.LogInformation("Inicio de la función BulkCreate_Timer_ADMIN_FEMCO.");
