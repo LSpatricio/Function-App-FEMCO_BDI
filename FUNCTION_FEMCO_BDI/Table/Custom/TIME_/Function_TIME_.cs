@@ -34,7 +34,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.TIME_
         #region BulkCreate como método.
         public async Task<string> BulkCreate_TIME_()
         {
-            DataTable dtfechas = FuncionalidadICM.getdates();
+            DataTable dtfechas = FuncionalidadICM.getdates(13);
 
             DateTime dateStart = (DateTime)dtfechas.Rows[0]["DateStart"];
 
