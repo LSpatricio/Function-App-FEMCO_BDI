@@ -50,7 +50,7 @@ namespace FUNCTION_FEMCO_BDI.Table.Custom.HISTORYREVISION
                 "AdminID",
                 "StartedAt"
             };
-            string parametros = $@" WHERE \""StartedAt\"" >= '{dateStartFormatted}' ";
+            string parametros = $@" ";
             string mensaje = "";
 
             string columnasFormateadas = FuncionalidadICM.FormatearColumnas(columnas);
